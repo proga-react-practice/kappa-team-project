@@ -3,5 +3,6 @@ export interface Motorcycle {
     maker: string;
     model: string;
     year: number;
+    engine: string;
   }
   
