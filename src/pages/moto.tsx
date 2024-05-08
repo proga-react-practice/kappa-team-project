@@ -1,12 +1,16 @@
 import  { useState } from 'react';
 import { Box, Stack, Pagination } from '@mui/material';
 
-import MotorcycleForm from './components/moto/moto_form';
-import MotorcycleList from './components/moto/moto_list';
-import { Motorcycle } from './types';
+import MotorcycleForm from '../components/form/moto_form';
+import MotorcycleList from '../components/list/moto_list';
+import { Motorcycle } from '../lib/types';
 
-function Ira() {
-  const [Motorcycles, setMotorcycles] = useState<Motorcycle[]>([]);
+interface MotoPageProps {
+  Motorcycles: Motorcycle[];
+  setMotorcycles: (Motorcycles: Motorcycle[]) => void;
+}
+
+function MotoPage({Motorcycles, setMotorcycles} : MotoPageProps) {
   const [page, setPage] = useState(1);
   const itemsPerPage = 2;
   const startIndex = (page - 1) * itemsPerPage;
@@ -42,7 +46,7 @@ function Ira() {
             <Pagination
               count={Math.ceil(Motorcycles.length / itemsPerPage)}
               page={page}
-              onChange={(event, value) => setPage(value)}
+              onChange={(_, value) => setPage(value)}
               color="secondary"
             />
           )}
@@ -52,4 +56,4 @@ function Ira() {
   );
 }
 
-export default Ira;
+export default MotoPage;

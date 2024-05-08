@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Motorcycle } from '../../types';
+import { Motorcycle } from '../../lib/types';
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 import ClearIcon from '@mui/icons-material/Clear';

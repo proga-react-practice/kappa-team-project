@@ -21,8 +21,8 @@ export default function Layout() {
             <Box>
                 <Box sx={{height: 50, margin: 0, paddingX: 5, paddingY: 2, width: "auto", display: "flex", justifyContent: "start", gap: 10, bgcolor: "background.default"}}>
                     <Link to="/"><IconButton sx={{color: 'primary.main'}}><HomeIcon/></IconButton></Link>
-                    <Link to="vlad"><Button startIcon={<DirectionsCarIcon/>} sx={{color: 'primary.main'}} href="vlad">Vlad</Button></Link>
-                    <Link to="ira"><Button startIcon={<TwoWheelerIcon/>} sx={{color: 'primary.main'}} href="ira">Ira</Button></Link>
+                    <Link to="cars"><Button startIcon={<DirectionsCarIcon/>} sx={{color: 'primary.main'}} href="vlad">Cars</Button></Link>
+                    <Link to="moto"><Button startIcon={<TwoWheelerIcon/>} sx={{color: 'primary.main'}} href="ira">Motorcycles</Button></Link>
                     <IconButton sx={{color: 'primary.main', marginLeft: "auto"}} onClick={changeTheme}>{themes[themeIndex].icon}</IconButton>
                 </Box>
                 <Divider />

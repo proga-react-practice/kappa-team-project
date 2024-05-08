@@ -1,18 +1,20 @@
 import CarForm from '../components/form/carForm'
 import { useState } from 'react'
 import { Car } from '../lib/types'
-import VCV from '../lib/vcv'
 import CarList from '../components/list/carList'
 import CarEditDialog from '../components/dialog/carEditDialog'
 import CarHistory from '../components/dialog/carsHistory'
 import { Box, Container, Divider} from '@mui/material'
 
-function Vlad() {
-	const { state : cars, 
-			setValue : setCars, 
-			revertTo : revertCommit, 
-			history : commitHistory,
-			index: commitIndex } = VCV<Car[]>([]) // Car array state
+interface CarPageProps {
+	cars: Car[]
+	setCars: (cars: Car[]) => void
+	revertCommit: (index: number) => void
+	commitHistory: Car[][]
+	commitIndex: number
+}
+
+function CarsPage({cars, setCars, revertCommit, commitHistory, commitIndex} : CarPageProps) {
 	const [editDialogOpen, setEditDialogOpen] = useState(false)
 	const [editIndex, setEditIndex] = useState<number | null>(null)
 
@@ -59,4 +61,4 @@ function Vlad() {
 	)
 }
 
-export default Vlad
+export default CarsPage
