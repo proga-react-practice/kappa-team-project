@@ -1,19 +1,21 @@
 import React, { useState } from 'react';
-import { Motorcycle } from '../../lib/types';
+import { Motorcycle } from '../../types';
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 import ClearIcon from '@mui/icons-material/Clear';
 import InputLabel from '@mui/material/InputLabel';
-import { MenuItem, Alert, TextField, FormControl, Select, SelectChangeEvent, Paper,Box } from '@mui/material';
+import { MenuItem, Alert, TextField, FormControlLabel, Radio,FormControl, FormLabel,Select, SelectChangeEvent, Paper,Box,RadioGroup,Typography } from '@mui/material';
 
 const initialMotorcycleState: Motorcycle = {
   id: 0,
   maker: '',
   model: '',
   year: 0,
+  engine : '',
 };
 
 const makers = ['Honda', 'Yamaha', 'Suzuki', 'Kawasaki', 'Ducati'];
+const engineTypes = ['Petrol', 'Diesel', 'Electric'] 
 
 interface MotorcycleFormProps {
   addMotorcycle: (motorcycle: Motorcycle) => void;
@@ -21,21 +23,38 @@ interface MotorcycleFormProps {
 
 export default function MotorcycleForm({ addMotorcycle }: MotorcycleFormProps) {
   const [motorcycle, setMotorcycle] = useState<Motorcycle>(initialMotorcycleState);
-  const [errors, setErrors] = useState<string[]>([]);
+  const [indexCounter, setIndexCounter] = useState<number>(0); 
+
+  const [errors, setErrors] = useState<{ [key: string]: string }>({
+    maker: '',
+    model: '',
+    year: '',
+    engine: '',
+  });
 
   const validate = () => {
-    const newErrors: string[] = [];
+    const newErrors: { [key: string]: string } = {};
+    let isValid = true;
+
     if (!motorcycle.maker) {
-      newErrors.push('Make is required');
+      newErrors.maker = 'Make is required';
+      isValid = false;
     }
     if (!motorcycle.model) {
-      newErrors.push('Model is required');
+      newErrors.model = 'Model is required';
+      isValid = false;
     }
     if (motorcycle.year <= 1900) {
-      newErrors.push('Year must be greater than 1900');
+      newErrors.year = 'Year must be greater than 1900';
+      isValid = false;
     }
+    if (!motorcycle.engine) {
+      newErrors.engine = 'Engine type is required';
+      isValid = false;
+    }
+
     setErrors(newErrors);
-    return newErrors.length === 0;
+    return isValid;
   };
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -51,27 +70,29 @@ export default function MotorcycleForm({ addMotorcycle }: MotorcycleFormProps) {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (validate()) {
-      addMotorcycle(motorcycle);
+      addMotorcycle({ ...motorcycle, id: indexCounter }); // Додаємо новий мотоцикл з індексом
       setMotorcycle(initialMotorcycleState);
+      setIndexCounter(indexCounter + 1); // Збільшуємо лічильник для наступного індексу
     }
   };
-
   const handleClear = () => {
     setMotorcycle(initialMotorcycleState);
-    setErrors([]);
+    setErrors({});
   };
 
   return (
-    <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', p: 2 }}>
+    <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', p: 3 }}>
 
-    <Paper sx={{ padding: 2 }}>
+    <Paper sx={{ padding: 4 }}>
     <form onSubmit={handleSubmit}>
         <Stack direction="column" spacing={2}>
-        <FormControl>
-          <InputLabel>Make</InputLabel>
+        <Typography variant='h4' sx={{ margin: 1, padding: 2 }}>Add Motorcycle</Typography>
+
+        <FormControl sx={{ width: 300 }}>
+          <InputLabel color="secondary">Make</InputLabel>
           <Select
             id="make"
-            name="make"
+            name="maker"
             label="Make"
             defaultValue=""
             value={motorcycle.maker}
@@ -85,6 +106,7 @@ export default function MotorcycleForm({ addMotorcycle }: MotorcycleFormProps) {
                   </MenuItem>
             ))}
           </Select>
+          {errors.maker && <Alert severity="error">{errors.maker}</Alert>}
         </FormControl>
           <TextField
             id="model"
@@ -94,6 +116,7 @@ export default function MotorcycleForm({ addMotorcycle }: MotorcycleFormProps) {
             value={motorcycle.model}
             onChange={handleChange}
           />
+          {errors.model && <Alert severity="error">{errors.model}</Alert>}
           <TextField
             type="number"
             id="year"
@@ -104,12 +127,23 @@ export default function MotorcycleForm({ addMotorcycle }: MotorcycleFormProps) {
             color='secondary'
             inputProps={{ min: 1900, max: 2024 }}
           />
-          {errors.map((error, index) => (
-            <Alert key={index} severity="error" >
-              {error}
-            </Alert>
-          ))}
-          <Stack direction="row" spacing={2}>
+          {errors.year && <Alert severity="error">{errors.year}</Alert>}
+
+        <FormControl required component="fieldset">
+                <FormLabel color="secondary" component="legend">Engine Type</FormLabel>
+                <RadioGroup 
+                    row
+                    aria-label="engine" 
+                    name="engine" 
+                    value={motorcycle.engine} 
+                    onChange={handleChange}>
+                    {engineTypes.map((engine) => (
+                      <FormControlLabel key={engine} value={engine} control={<Radio />} label={engine} />
+                    ))}
+                </RadioGroup>
+          {errors.engine && <Alert severity="error">{errors.engine}</Alert>}
+            </FormControl>
+          <Stack direction="row" spacing={2} sx={{ display: 'flex', justifyContent: 'center' }}>
             <Button variant="contained" type="submit" color='primary'>
               Submit
             </Button>
