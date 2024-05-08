@@ -6,7 +6,7 @@ import Collapse from '@mui/material/Collapse';
 import Stack from '@mui/material/Stack';
 import {Typography } from '@mui/material';
 
-import { Motorcycle } from '../../types';
+import { Motorcycle } from '../pages/ira/types';
 
 interface MotorcycleListProps {
   motorcycles: Motorcycle[];

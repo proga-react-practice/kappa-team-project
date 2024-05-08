@@ -1,11 +1,11 @@
 import { ChangeEvent, FormEvent, useEffect, useState } from 'react'
-import { Car, FormErrors, emptyCar, engineTypes } from '../types'
+import { Car, FormErrors, emptyCar, engineTypes } from '../../lib/types'
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import TextField from '@mui/material/TextField';
 import { Button, ButtonGroup, FormControl, FormControlLabel, FormHelperText, FormLabel, MenuItem, Radio, RadioGroup, Typography } from '@mui/material';
 
-import { validateCar } from '../utils'
+import { validateCar } from '../../lib/utils'
 
 interface CarFormProps { addCar: (car: Car) => void }
 

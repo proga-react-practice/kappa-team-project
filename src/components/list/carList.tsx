@@ -1,7 +1,7 @@
 import { Card, CardContent, Container, Box, List, ListItem, Slide, Typography, ButtonGroup, IconButton } from '@mui/material'
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
-import { Car } from '../types'
+import { Car } from '../../lib/types'
 import { useEffect, useState } from 'react';
 
 interface CarListProps {

@@ -1,10 +1,10 @@
-import CarForm from './components/carForm'
+import CarForm from '../components/form/carForm'
 import { useState } from 'react'
-import { Car } from './types'
-import VCV from '../../lib/vcv'
-import CarList from './components/carList'
-import CarEditDialog from './components/carEditDialog'
-import CarHistory from './components/carsHistory'
+import { Car } from '../lib/types'
+import VCV from '../lib/vcv'
+import CarList from '../components/list/carList'
+import CarEditDialog from '../components/dialog/carEditDialog'
+import CarHistory from '../components/dialog/carsHistory'
 import { Box, Container, Divider} from '@mui/material'
 
 function Vlad() {

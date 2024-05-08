@@ -1,4 +1,4 @@
-import { Car } from '../types';
+import { Car } from '../../lib/types';
 import { useState } from 'react';
 import { Button, Dialog, DialogContent, DialogTitle, IconButton, Typography } from '@mui/material'
 import { SimpleTreeView, TreeItem } from '@mui/x-tree-view';

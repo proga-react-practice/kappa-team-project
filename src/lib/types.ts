@@ -5,6 +5,13 @@ export interface Car { // Car object fields
     engine: string
 }
 
+export interface Motorcycle {
+    id: number;
+    maker: string;
+    model: string;
+    year: number;
+}
+
 export const engineTypes = ['Petrol', 'Diesel', 'Electric'] // Engine types
 
 export interface FormErrors extends Car {}

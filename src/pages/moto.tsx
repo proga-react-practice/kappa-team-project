@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import { Box, Stack, Divider } from '@mui/material';
 
-import MotorcycleForm from './components/moto/moto_form';
-import MotorcycleList from './components/moto/moto_list';
-import { Motorcycle } from './types';
+import MotorcycleForm from '../components/form/moto_form';
+import MotorcycleList from '../components/list/moto_list';
+import { Motorcycle } from '../lib/types';
 
-import './App.css';
+import './styles/moto.css';
 
 function Ira() {
   const [Motorcycles, setMotorcycles] = useState<Motorcycle[]>([]);
@@ -14,7 +14,6 @@ function Ira() {
     setMotorcycles([...Motorcycles, Motorcycle]);
   };
 
- 
   
 
 

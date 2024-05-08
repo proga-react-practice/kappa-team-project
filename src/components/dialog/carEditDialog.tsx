@@ -1,9 +1,9 @@
 
 import { Dialog, DialogActions, DialogContent, DialogTitle, Button} from '@mui/material';
 import { ChangeEvent, useState, useEffect } from 'react';
-import { Car, FormErrors, emptyCar } from '../types';
-import { validateCar } from '../utils';
-import { FormFields } from './carForm';
+import { Car, FormErrors, emptyCar } from '../../lib/types';
+import { validateCar } from '../../lib/utils';
+import { FormFields } from '../form/carForm';
 
 interface CarEditDialogProps {
     open: boolean,
