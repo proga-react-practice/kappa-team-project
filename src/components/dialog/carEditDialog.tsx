@@ -14,7 +14,7 @@ interface CarEditDialogProps {
 
 export default function CarEditDialog({editCar, carData, open, handleClose} : CarEditDialogProps){
 
-    const { control, handleSubmit: submit, formState, reset } = useForm<Car>()
+    const { register, handleSubmit: submit, formState, reset } = useForm<Car>({defaultValues: carData})
     
     const onSubmit: SubmitHandler<Car> = (data) => {
         editCar(data)
@@ -33,7 +33,7 @@ export default function CarEditDialog({editCar, carData, open, handleClose} : Ca
                 <form onSubmit={submit(onSubmit)}>
                     <DialogTitle>Edit Car</DialogTitle>
                     <DialogContent>
-                        <FormFields control={control} errors={formState.errors} />
+                        <FormFields register={register} errors={formState.errors} />
                     </DialogContent>
                     <DialogActions>
                         <Button onClick={handleClose}>Cancel</Button>
