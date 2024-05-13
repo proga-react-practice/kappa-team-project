@@ -3,17 +3,19 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import TextField from '@mui/material/TextField';
 import { Button, ButtonGroup, FormControl, FormControlLabel, FormHelperText, FormLabel, MenuItem, Radio, RadioGroup, Typography } from '@mui/material';
-import { useForm, SubmitHandler, FieldErrors, UseFormRegister } from "react-hook-form";
+import { useForm, SubmitHandler, FieldErrors, UseFormRegister, UseFormWatch } from "react-hook-form";
+
+import { useEffect } from 'react';
 
 interface CarFormProps { addCar: (car: Car) => void }
 
 interface FormFieldsProps {
     register: UseFormRegister<Car>
     errors: FieldErrors
+    watch: UseFormWatch<Car>
 }
 
-export function FormFields({register, errors} : FormFieldsProps) {
-
+export function FormFields({register, errors, watch} : FormFieldsProps) {
     return (
         <>
             <TextField
@@ -22,7 +24,9 @@ export function FormFields({register, errors} : FormFieldsProps) {
                 select
                 fullWidth
                 {...register('maker', {required: 'Maker is required'})}
+                value={watch('maker') || ''}
                 error={errors.maker !== undefined}
+                
                 helperText={errors.maker?.message?.toString()}>
                     <MenuItem value="">Select Maker</MenuItem>
                     <MenuItem value="Toyota">Toyota</MenuItem>
@@ -49,9 +53,8 @@ export function FormFields({register, errors} : FormFieldsProps) {
                 <FormLabel component="legend">Engine Type</FormLabel>
                 <RadioGroup 
                     row
-                    {...register('engine', {required: 'Engine type is required'})}
                     aria-label="engine">
-                    {engineTypes.map((engine) => (<FormControlLabel value={engine} control={<Radio />} label={engine} />))}
+                    {engineTypes.map((engine) => (<FormControlLabel checked={engine == watch('engine')} {...register('engine', {required: 'Engine type is required'})} value={engine} control={<Radio />} label={engine} />))}
                 </RadioGroup>
                 <FormHelperText>{errors.engine?.message?.toString()}</FormHelperText>
             </FormControl>
@@ -61,13 +64,21 @@ export function FormFields({register, errors} : FormFieldsProps) {
 
 export default function CarForm({ addCar } : CarFormProps){
 
-    const { register, handleSubmit: submit, formState, reset } = useForm<Car>({defaultValues: emptyCar})
+    const { register, handleSubmit: submit, formState, reset, watch } = useForm<Car>({defaultValues: emptyCar})
     const onSubmit: SubmitHandler<Car> = (data) => {
         addCar(data)
-        reset(emptyCar)
+        reset()
     }
 
-    const handleReset = () => reset(emptyCar)
+    const fieldState = watch("engine")
+
+    const handleReset = () => {
+        reset()
+    }
+
+    useEffect(() => {
+        console.log(fieldState)
+    }, [fieldState])
     
     return (
         <form onSubmit={submit(onSubmit)}>
@@ -76,7 +87,7 @@ export default function CarForm({ addCar } : CarFormProps){
                     <Typography variant='h4' sx={{margin: 1}}>Add Car</Typography>
                 
                     
-                        <FormFields register={register} errors={formState.errors} />
+                        <FormFields register={register} errors={formState.errors} watch={watch} />
 
                         <ButtonGroup sx={{margin: 1}}>
                             <Button variant='outlined' onClick={handleReset}>Clear</Button>
