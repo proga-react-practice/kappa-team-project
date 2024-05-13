@@ -17,6 +17,26 @@ export default function MotorcycleList({ motorcycles, setMotorcycles }: Motorcyc
   const [editIndex, setEditIndex] = useState<number | null>(null);
   const [editMotorcycle, setEditMotorcycle] = useState<Motorcycle | null>(null);
 
+  const dragItem = React.useRef<number | null>(null);
+  const dragOverItem = React.useRef<number | null>(null);
+
+  const handleSort = () => {
+    const _motorcycles = [...motorcycles];
+
+    const draggedItemContent = _motorcycles.splice(dragItem.current!, 1)[0];
+
+    _motorcycles.splice(dragOverItem.current!, 0, draggedItemContent);
+
+    dragItem.current = null;
+    dragOverItem.current = null;
+
+    setMotorcycles(_motorcycles);
+  };
+
+
+
+
+
   const deleteMotorcycle = (index: number) => {
     const newMotorcycles = motorcycles.filter((_, i) => i !== index);
     setMotorcycles(newMotorcycles);
@@ -43,15 +63,22 @@ export default function MotorcycleList({ motorcycles, setMotorcycles }: Motorcyc
 
   return (
     <Box sx={{ overflowY: 'auto', overflowX: 'hidden', maxHeight: { xs: 200, md: 400 }, scrollbarColor: (theme) => `${theme.palette.primary.main} ${theme.palette.background.default}` }}>
-      {motorcycles.map((motorcycle, i) => (
-        <Collapse key={i} in={true} unmountOnExit>
-          <Card className="motorcycle-item" sx={{ marginBottom: 1, width: 250 }}>
+      {motorcycles.map((motorcycle, index) => (
+        <Collapse key={index} in={true} unmountOnExit>
+          <Card className="motorcycle-item"
+                key={index}
+                draggable={true}
+                onDragStart={() => (dragItem.current = index)}
+                onDragEnter={() => (dragOverItem.current = index)}
+                onDragEnd={handleSort}
+                onDragOver={(e) => e.preventDefault()}
+                sx={{ marginBottom: 1, width: 250 }}>
             <CardContent>
               <Box display="flex" justifyContent="space-between" alignItems="center">
                 <TwoWheelerIcon sx={{ color: 'primary.main' }} />
                 <Box>
-                  <IconButton color='error' onClick={() => deleteMotorcycle(i)}><DeleteIcon /></IconButton>
-                  <IconButton color='warning' onClick={() => handleEditClick(i)}><EditIcon /></IconButton>
+                  <IconButton color='error' onClick={() => deleteMotorcycle(index)}><DeleteIcon /></IconButton>
+                  <IconButton color='warning' onClick={() => handleEditClick(index)}><EditIcon /></IconButton>
                 </Box>
               </Box>
               <Typography variant="body1" sx={{ textAlign: 'left' }}><strong>Maker:</strong> {motorcycle.maker}</Typography>
@@ -65,7 +92,7 @@ export default function MotorcycleList({ motorcycles, setMotorcycles }: Motorcyc
       <Dialog open={editIndex !== null} onClose={handleEditClose}>
         <DialogTitle>Edit Motorcycle</DialogTitle>
         <DialogContent>
-          <Stack direction="column" spacing={2} padding={2}> 
+          <Stack direction="column" spacing={2} padding={2}>
             <FormControl sx={{ width: 300 }}>
               <InputLabel color="secondary">Make</InputLabel>
               <Select
