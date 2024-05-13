@@ -1,115 +1,115 @@
-import { ChangeEvent, FormEvent, useEffect, useState } from 'react'
-import { Car, FormErrors, emptyCar, engineTypes } from '../../lib/types'
+import { Car, emptyCar, engineTypes } from '../../lib/types'
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import TextField from '@mui/material/TextField';
 import { Button, ButtonGroup, FormControl, FormControlLabel, FormHelperText, FormLabel, MenuItem, Radio, RadioGroup, Typography } from '@mui/material';
-
-import { validateCar } from '../../lib/utils'
+import { useForm, SubmitHandler, Controller, Control, FieldErrors } from "react-hook-form";
 
 interface CarFormProps { addCar: (car: Car) => void }
 
 interface FormFieldsProps {
-    car: Car,
-    handleChange: (e: ChangeEvent<HTMLInputElement>) => void,
-    errors: FormErrors
+    control: Control<Car>
+    errors: FieldErrors
 }
 
-export function FormFields({ car, handleChange, errors } : FormFieldsProps) {
+export function FormFields({control, errors} : FormFieldsProps) {
+
     return (
         <>
-            <TextField
-                sx={{marginY: 1}}
-                label='Maker'
+            <Controller
                 name='maker'
-                select
-                value={car.maker}
-                onChange={handleChange}
-                error={errors.maker !== ''}
-                helperText={errors.maker}
-                fullWidth>
-                    <MenuItem value="">Select Maker</MenuItem>
-                    <MenuItem value="Toyota">Toyota</MenuItem>
-                    <MenuItem value="Honda">Honda</MenuItem>
-                    <MenuItem value="Ford">Ford</MenuItem>
-            </TextField>
-            <TextField
-                sx={{marginY: 1}}
-                label='Model'
+                control={control}
+                rules={{required: 'Maker is required'}}
+                render={({field}) => (
+                    <TextField
+                        sx={{marginY: 1}}
+                        label='Maker'
+                        select
+                        fullWidth
+                        error={errors.maker !== undefined}
+                        helperText={errors.maker?.message?.toString()}
+                        {...field}>
+                            <MenuItem value="">Select Maker</MenuItem>
+                            <MenuItem value="Toyota">Toyota</MenuItem>
+                            <MenuItem value="Honda">Honda</MenuItem>
+                            <MenuItem value="Ford">Ford</MenuItem>
+                    </TextField>
+                )}
+            />
+            <Controller
                 name='model'
-                value={car.model}
-                onChange={handleChange}
-                error={errors.model !== ''}
-                helperText={errors.model}
-                fullWidth
+                control={control}
+                rules={{required: 'Model is required'}}
+                render={({field}) => (
+                    <TextField
+                        sx={{marginY: 1}}
+                        label='Model'
+                        error={errors.model !== undefined}
+                        helperText={errors.model?.message?.toString()}
+                        fullWidth
+                        {...field}
+                    />
+                )}
             />
-            <TextField
-                sx={{marginY: 1}}
-                label='Year'
+            <Controller
                 name='year'
-                value={car.year}
-                onChange={handleChange}
-                error={errors.year !== ''}
-                helperText={errors.year}
-                fullWidth
+                control={control}
+                rules={{required: 'Year is required', min: {value: 1900, message: 'Year must be greater than 1900'}, max: {value: new Date().getFullYear(), message: `Year must be less than ${new Date().getFullYear()}`}, pattern: {value: /^\d{4}$/, message: 'Year must be a 4 digit number'}}}
+                render={({field}) => (
+                    <TextField
+                        sx={{marginY: 1}}
+                        label='Year'
+                        error={errors.year !== undefined}
+                        helperText={errors.year?.message?.toString()}
+                        fullWidth
+                        {...field}
+                    />
+                )}
             />
-            <FormControl required component="fieldset" error={Boolean(errors.engine)}>
-                <FormLabel component="legend">Engine Type</FormLabel>
-                <RadioGroup 
-                    row
-                    aria-label="engine" 
-                    name="engine" 
-                    value={car.engine} 
-                    onChange={handleChange}>
-                    {engineTypes.map((engine) => (<FormControlLabel value={engine} control={<Radio />} label={engine} />))}
-                </RadioGroup>
-                <FormHelperText>{errors.engine}</FormHelperText>
-            </FormControl>
+            <Controller
+                name='engine'
+                control={control}
+                rules={{required: 'Engine Type is required'}}
+                render={({field}) => (
+                    <FormControl error={errors.engine !== undefined} required component="fieldset">
+                        <FormLabel component="legend">Engine Type</FormLabel>
+                        <RadioGroup 
+                            row
+                            aria-label="engine" 
+                            {...field}>
+                            {engineTypes.map((engine) => (<FormControlLabel value={engine} control={<Radio />} label={engine} />))}
+                        </RadioGroup>
+                        <FormHelperText>{errors.engine?.message?.toString()}</FormHelperText>
+                    </FormControl>
+                )}
+            />
         </>
     )
 }
 
 export default function CarForm({ addCar } : CarFormProps){
-    const [car, setCar] = useState(emptyCar) // Car object state
-    const [errors, setErrors] = useState<FormErrors>(emptyCar) // Errors state
 
-    useEffect(() => { // Effect to re-validate form fields
-        if (Object.values(errors).some((value) => value !== '')){
-            validateCar({car, errors, setErrors})
-        }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [car])
-    
-    const handleChange = (e: ChangeEvent<HTMLInputElement>) => { // Handler for input changes
-        const { name, value } = e.target
-        setCar({ ...car, [name]: value })
-    }
-    
-    const handleSubmit = (e: FormEvent) => { // Handler for form submission
-        e.preventDefault()
-        if (!validateCar({car, errors, setErrors})) return
-        addCar(car)
-        setCar(emptyCar)
-    }
+    const { control, handleSubmit: submit, formState, reset } = useForm<Car>()
+    const onSubmit: SubmitHandler<Car> = (data) => addCar(data)
 
-    const handleReset = () => { // Handler for form reset
-        setCar(emptyCar)
-        setErrors(emptyCar)
-    }
-
+    const handleReset = () => reset(emptyCar)
     
     return (
-        <Card sx={{overflowY: "auto", scrollbarColor: (theme) => `${theme.palette.primary.main} ${theme.palette.background.default}`}}>
-            <CardContent sx={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
-                <Typography variant='h4' sx={{margin: 1}}>Add Car</Typography>
-            
-                <FormFields car={car} handleChange={handleChange} errors={errors} />
+        <form onSubmit={submit(onSubmit)}>
+            <Card sx={{overflowY: "auto", scrollbarColor: (theme) => `${theme.palette.primary.main} ${theme.palette.background.default}`}}>
+                <CardContent sx={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
+                    <Typography variant='h4' sx={{margin: 1}}>Add Car</Typography>
+                
+                    
+                        <FormFields control={control} errors={formState.errors} />
 
-                <ButtonGroup sx={{margin: 1}}>
-                    <Button variant='outlined' onClick={handleReset}>Clear</Button>
-                    <Button variant='contained' onClick={handleSubmit}>Add Car</Button>
-                </ButtonGroup>
-            </CardContent>
-        </Card>
+                        <ButtonGroup sx={{margin: 1}}>
+                            <Button variant='outlined' onClick={handleReset}>Clear</Button>
+                            <Button variant='contained' type='submit'>Add Car</Button>
+                        </ButtonGroup>
+                    
+                </CardContent>
+            </Card>
+        </form>
     )
 }
