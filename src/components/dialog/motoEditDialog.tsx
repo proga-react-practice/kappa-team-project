@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import {
   Dialog,
   DialogTitle,
@@ -30,24 +30,21 @@ interface MotoEditDialogProps {
 }
 
 const MotoEditDialog: React.FC<MotoEditDialogProps> = ({ open, handleClose, motoData, saveChanges }) => {
-  const [editMotorcycle, setEditMotorcycle] = useState<Motorcycle | null>(null);
-  const { register, handleSubmit, formState: { errors } } = useForm<Motorcycle>();
+  const { register, setValue, watch, handleSubmit,reset, formState: { errors } } = useForm<Motorcycle>();
 
   useEffect(() => {
     if (motoData) {
-      setEditMotorcycle(motoData);
+      reset(motoData);
     }
   }, [motoData]);
 
-  const handleSaveEdit = () => {
-    if (editMotorcycle) {
-      saveChanges(editMotorcycle); // Оновіть поточний список у батьківському компоненті
+  const handleSaveEdit = (data:Motorcycle) => {
+      saveChanges(data); 
       handleClose();
-    }
   };
-
+console.log(watch("maker"))
   return (
-    <Dialog open={open} onClose={handleClose}>
+    <Dialog open={open} onClose={handleClose} >
       <DialogTitle>Edit Motorcycle</DialogTitle>
       <DialogContent>
         <Container component="form" onSubmit={handleSubmit(handleSaveEdit)} id="moto-edit">
@@ -55,12 +52,11 @@ const MotoEditDialog: React.FC<MotoEditDialogProps> = ({ open, handleClose, moto
             <FormControl sx={{ width: 300 }}>
               <InputLabel color="secondary">Maker</InputLabel>
               <Select
+                defaultValue={""}
                 label="Make"
-                value={editMotorcycle?.maker || ''}
                 {...register('maker', { required: 'Make is required' })}
-                onChange={(e) => {
-                  setEditMotorcycle({ ...editMotorcycle!, maker: e.target.value as string });
-                }}
+                value={watch("maker")??""}
+                
                 color="secondary"
                 error={!!errors.maker}
               >
@@ -76,22 +72,18 @@ const MotoEditDialog: React.FC<MotoEditDialogProps> = ({ open, handleClose, moto
             <TextField
               label="Model"
               color="secondary"
-              value={editMotorcycle?.model || ''}
               {...register('model', { required: 'Model is required', minLength: { value: 1, message: 'Model must be at least 1 character long' }, maxLength: { value: 15, message: 'Model must be at most 15 characters long' } })}
-              onChange={(e) => setEditMotorcycle({ ...editMotorcycle!, model: e.target.value })}
             />
             {errors.model && <Alert severity="error">{errors.model.message}</Alert>}
             <TextField
               type="number"
               label="Year"
-              value={editMotorcycle?.year || ''}
               color="secondary"
               {...register('year', {
                 required: 'Year is required',
                 min: { value: 1900, message: 'Year must be at least 1900' },
                 max: { value: 2024, message: 'Year must be at most 2024' }
               })}
-              onChange={(e) => setEditMotorcycle({ ...editMotorcycle!, year: e.target.value })}
               error={!!errors.year}
               helperText={errors.year?.message}
               inputProps={{ min: 1900, max: 2024 }}
@@ -99,16 +91,14 @@ const MotoEditDialog: React.FC<MotoEditDialogProps> = ({ open, handleClose, moto
             {errors.year && <Alert severity="error">{errors.year.message}</Alert>}
             <FormControl required component="fieldset">
               <FormLabel color="secondary" component="legend">Engine Type</FormLabel>
-              <RadioGroup
+              <RadioGroup onChange={(e) => setValue("engine",e.target.value)}
                 row
                 aria-label="engine"
-                value={editMotorcycle?.engine || ''}
-                onChange={(e) => setEditMotorcycle({ ...editMotorcycle!, engine: e.target.value })}
-              >
+                value={watch("engine")??""}
+              > 
                 {engineTypes.map((engine) => (
                   <FormControlLabel
                     key={engine}
-                    checked={engine === editMotorcycle?.engine}
                     value={engine}
                     control={<Radio />}
                     label={engine}
