@@ -12,8 +12,6 @@ export interface Motorcycle {
     engine: string;
 }
 
-export const makers = ['Honda', 'Yamaha', 'Suzuki', 'Kawasaki', 'Ducati'];
-
 export const engineTypes = ['Petrol', 'Diesel', 'Electric'] // Engine types
 
 export interface FormErrors extends Car {}

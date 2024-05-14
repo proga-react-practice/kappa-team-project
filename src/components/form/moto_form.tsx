@@ -1,9 +1,11 @@
-import { Motorcycle, engineTypes, makers } from '../../lib/types';
+import { Motorcycle  } from '../../lib/types';
 import { Button, Stack, Typography, Alert, TextField, FormControlLabel, Radio, FormControl, FormLabel, Select, Paper, Card, RadioGroup, MenuItem } from '@mui/material';
 import ClearIcon from '@mui/icons-material/Clear';
 import InputLabel from '@mui/material/InputLabel';
-import { useEffect, } from 'react'; // Added useEffect import
+import { useEffect, } from 'react'; 
 import { useForm,  } from "react-hook-form";
+import { engineTypes, makers } from '../../lib/constants';
+
 const initialMotorcycleState: Motorcycle = {
   maker: '',
   model: '',
