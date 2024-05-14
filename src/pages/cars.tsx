@@ -5,16 +5,14 @@ import CarList from '../components/list/carList'
 import CarEditDialog from '../components/dialog/carEditDialog'
 import CarHistory from '../components/dialog/carsHistory'
 import { Box, Container, Divider} from '@mui/material'
+import VCV from '../lib/vcv'
 
-interface CarPageProps {
-	cars: Car[]
-	setCars: (cars: Car[]) => void
-	revertCommit: (index: number) => void
-	commitHistory: Car[][]
-	commitIndex: number
-}
-
-function CarsPage({cars, setCars, revertCommit, commitHistory, commitIndex} : CarPageProps) {
+function CarsPage() {
+	const { state : cars, 
+		setValue : setCars, 
+		revertTo : revertCommit, 
+		history : commitHistory,
+		index: commitIndex } = VCV<Car[]>([])
 	const [editDialogOpen, setEditDialogOpen] = useState(false)
 	const [editIndex, setEditIndex] = useState<number | null>(null)
 
