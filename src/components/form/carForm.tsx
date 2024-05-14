@@ -3,9 +3,7 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import TextField from '@mui/material/TextField';
 import { Button, ButtonGroup, FormControl, FormControlLabel, FormHelperText, FormLabel, MenuItem, Radio, RadioGroup, Typography } from '@mui/material';
-import { useForm, SubmitHandler, FieldErrors, UseFormRegister, UseFormWatch } from "react-hook-form";
-
-import { useEffect } from 'react';
+import { useForm, SubmitHandler, FieldErrors, UseFormRegister, UseFormWatch, UseFormSetValue } from "react-hook-form";
 
 interface CarFormProps { addCar: (car: Car) => void }
 
@@ -13,9 +11,10 @@ interface FormFieldsProps {
     register: UseFormRegister<Car>
     errors: FieldErrors
     watch: UseFormWatch<Car>
+    setValue: UseFormSetValue<Car>
 }
 
-export function FormFields({register, errors, watch} : FormFieldsProps) {
+export function FormFields({register, errors, watch, setValue} : FormFieldsProps) {
     return (
         <>
             <TextField
@@ -24,6 +23,7 @@ export function FormFields({register, errors, watch} : FormFieldsProps) {
                 select
                 fullWidth
                 {...register('maker', {required: 'Maker is required'})}
+                onChange={(e) => {setValue('maker', e.target.value)}}
                 value={watch('maker') || ''}
                 error={errors.maker !== undefined}
                 
@@ -36,7 +36,7 @@ export function FormFields({register, errors, watch} : FormFieldsProps) {
             <TextField
                 sx={{marginY: 1}}
                 label='Model'
-                {...register('model', {required: 'Model is required', minLength: {value: 2, message: 'Model must be at least 2 characters long'}})}
+                {...register('model', {required: 'Model is required', minLength: {value: 5, message: 'Model must be at least 5 characters long'}})}
                 error={errors.model !== undefined}
                 helperText={errors.model?.message?.toString()}
                 fullWidth
@@ -53,8 +53,9 @@ export function FormFields({register, errors, watch} : FormFieldsProps) {
                 <FormLabel component="legend">Engine Type</FormLabel>
                 <RadioGroup 
                     row
+                    value={watch('engine') || ''}
                     aria-label="engine">
-                    {engineTypes.map((engine) => (<FormControlLabel checked={engine == watch('engine')} {...register('engine', {required: 'Engine type is required'})} value={engine} control={<Radio />} label={engine} />))}
+                    {engineTypes.map((engine) => (<FormControlLabel value={engine} {...register('engine', {required: 'Engine type is required'})} control={<Radio />} label={engine} />))}
                 </RadioGroup>
                 <FormHelperText>{errors.engine?.message?.toString()}</FormHelperText>
             </FormControl>
@@ -64,21 +65,16 @@ export function FormFields({register, errors, watch} : FormFieldsProps) {
 
 export default function CarForm({ addCar } : CarFormProps){
 
-    const { register, handleSubmit: submit, formState, reset, watch } = useForm<Car>({defaultValues: emptyCar})
+    const { register, handleSubmit: submit, formState, reset, watch, setValue } = useForm<Car>({defaultValues: emptyCar})
     const onSubmit: SubmitHandler<Car> = (data) => {
         addCar(data)
         reset()
     }
-
-    const fieldState = watch("engine")
+    
 
     const handleReset = () => {
         reset()
     }
-
-    useEffect(() => {
-        console.log(fieldState)
-    }, [fieldState])
     
     return (
         <form onSubmit={submit(onSubmit)}>
@@ -87,7 +83,7 @@ export default function CarForm({ addCar } : CarFormProps){
                     <Typography variant='h4' sx={{margin: 1}}>Add Car</Typography>
                 
                     
-                        <FormFields register={register} errors={formState.errors} watch={watch} />
+                        <FormFields register={register} errors={formState.errors} watch={watch} setValue={setValue} />
 
                         <ButtonGroup sx={{margin: 1}}>
                             <Button variant='outlined' onClick={handleReset}>Clear</Button>
