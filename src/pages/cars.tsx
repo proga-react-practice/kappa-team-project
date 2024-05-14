@@ -36,6 +36,12 @@ function CarsPage({cars, setCars, revertCommit, commitHistory, commitIndex} : Ca
 		setEditDialogOpen(true)
 	}
 
+	function moveCar(from: number, to: number) { // Function to move a car in the list
+		const newCars = [...cars]
+		newCars.splice(to, 0, newCars.splice(from, 1)[0])
+		setCars(newCars)
+	}
+
 	return (
 		<Box 
 			sx={{height: '100vh', width: '100vw', alignContent: 'center', justifyContent: "center", bgcolor: 'background.default'}}
@@ -48,7 +54,7 @@ function CarsPage({cars, setCars, revertCommit, commitHistory, commitIndex} : Ca
 							currentIndex={commitIndex}
 							history={commitHistory} 
 							revertTo={revertCommit}/>
-						<CarList cars={cars} deleteCar={deleteCar} editCar={handleEdit} />
+						<CarList cars={cars} deleteCar={deleteCar} editCar={handleEdit} moveCar={moveCar} />
 					</Box>
 				</Container>
 				<CarEditDialog 

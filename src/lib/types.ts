@@ -1,8 +1,9 @@
+
 export interface Car { // Car object fields
     maker: string
     model: string
     year: string
-    engine: string
+    engine: typeof engineTypes[number]
 }
 
 export interface Motorcycle {
