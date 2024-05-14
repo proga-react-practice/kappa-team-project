@@ -2,11 +2,12 @@ import React, { useState } from 'react';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Collapse from '@mui/material/Collapse';
-import { Typography, Box, IconButton, Dialog, DialogTitle, DialogContent, DialogActions, Button, TextField, FormControl, InputLabel, Select, MenuItem, Stack, FormControlLabel, RadioGroup, Radio, FormLabel } from '@mui/material';
+import { Typography, Box, IconButton, Dialog, DialogTitle, DialogContent, DialogActions, Button, TextField, FormControl, InputLabel, Select, MenuItem, Stack, FormControlLabel, RadioGroup, Radio, FormLabel,Alert } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import TwoWheelerIcon from '@mui/icons-material/TwoWheeler';
 import EditIcon from '@mui/icons-material/Edit';
 import { Motorcycle, engineTypes, makers } from '../../lib/types';
+import { useForm } from 'react-hook-form';
 
 interface MotorcycleListProps {
   motorcycles: Motorcycle[];
@@ -14,6 +15,9 @@ interface MotorcycleListProps {
 }
 
 export default function MotorcycleList({ motorcycles, setMotorcycles }: MotorcycleListProps) {
+  const {
+   register,    formState: { errors },  watch, } = useForm<Motorcycle>();
+    
   const [editIndex, setEditIndex] = useState<number | null>(null);
   const [editMotorcycle, setEditMotorcycle] = useState<Motorcycle | null>(null);
 
@@ -94,7 +98,7 @@ export default function MotorcycleList({ motorcycles, setMotorcycles }: Motorcyc
         <DialogContent>
           <Stack direction="column" spacing={2} padding={2}>
             <FormControl sx={{ width: 300 }}>
-              <InputLabel color="secondary">Make</InputLabel>
+              <InputLabel color="secondary">Maker</InputLabel>
               <Select
                 label="Make"
                 value={editMotorcycle?.maker || ''}
@@ -103,26 +107,40 @@ export default function MotorcycleList({ motorcycles, setMotorcycles }: Motorcyc
               >
                 <MenuItem value="">Select Maker</MenuItem>
                 {makers.map((maker) => (
-                  <MenuItem key={maker} value={maker}>
-                    {maker}
+                  <MenuItem key={maker} value={maker} {...register('maker', { required: 'Make is required' })}>
+                  {maker}
                   </MenuItem>
                 ))}
               </Select>
+              {errors.maker && <Alert severity="error">{errors.maker.message}</Alert>}
+
             </FormControl>
             <TextField
               label="Model"
               color="secondary"
               value={editMotorcycle?.model || ''}
+              {...register('model', { required: 'Model is required', minLength: { value: 1, message: 'Model must be at least 1 characters long' }, maxLength: { value: 15, message: 'Model must be at most 15 characters long' } })}
+
               onChange={(e) => setEditMotorcycle({ ...editMotorcycle!, model: e.target.value })}
             />
+            {errors.model && <Alert severity="error">{errors.model.message}</Alert>}
+
+
             <TextField
-              type="number"
-              label="Year"
-              value={editMotorcycle?.year || ''}
-              onChange={(e) => setEditMotorcycle({ ...editMotorcycle!, year: parseInt(e.target.value) })}
-              color="secondary"
-              inputProps={{ min: 1900, max: 2024 }}
-            />
+                type="number"
+                label="Year"
+                value={editMotorcycle?.year || ''}
+                color="secondary"
+                {...register('year', {
+                  required: 'Year is required',
+                  min: { value: 1900, message: 'Year must be greater than 1900' },
+                  max: { value: new Date().getFullYear(), message: `Year must be less than ${new Date().getFullYear()}` },
+                  pattern: { value: /^\d{4}$/, message: 'Year must be a 4 digit number' }
+                })}
+                error={errors.year !== undefined}
+                helperText={errors.year?.message?.toString()}
+              />
+
             <FormControl required component="fieldset">
               <FormLabel color="secondary" component="legend">
                 Engine Type
@@ -133,9 +151,8 @@ export default function MotorcycleList({ motorcycles, setMotorcycles }: Motorcyc
                 value={editMotorcycle?.engine || ''}
                 onChange={(e) => setEditMotorcycle({ ...editMotorcycle!, engine: e.target.value })}
               >
-                {engineTypes.map((engine) => (
-                  <FormControlLabel key={engine} value={engine} control={<Radio />} label={engine} />
-                ))}
+              {engineTypes.map((engine) => (<FormControlLabel checked={engine == watch('engine')} {...register('engine', {required: 'Engine type is required'})} value={engine} control={<Radio />} label={engine} />))}
+
               </RadioGroup>
             </FormControl>
           </Stack>
