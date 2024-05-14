@@ -4,12 +4,11 @@ import MotorcycleForm from '../components/form/moto_form';
 import MotorcycleList from '../components/list/moto_list';
 import { Motorcycle } from '../lib/types';
 
-interface MotoPageProps {
-  Motorcycles: Motorcycle[];
-  setMotorcycles: (Motorcycles: Motorcycle[]) => void;
-}
+import { useState } from 'react';
 
-const MotoPage: React.FC<MotoPageProps> = ({ Motorcycles, setMotorcycles }) => {
+
+const MotoPage: React.FC = () => {
+  const [Motorcycles, setMotorcycles] = useState<Motorcycle[]>([]);
 
   const addMotorcycle = (motorcycle: Motorcycle) => {
     setMotorcycles([...Motorcycles, motorcycle]);
