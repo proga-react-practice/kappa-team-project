@@ -77,13 +77,21 @@ export default function MotorcycleForm({ addMotorcycle }: MotorcycleFormProps) {
 
             <FormControl required component="fieldset">
               <FormLabel color="secondary" component="legend">Engine Type</FormLabel>
-              <RadioGroup
-                row
-                aria-label="engine"
-                >
-                   {engineTypes.map((engine) => (<FormControlLabel checked={engine == watch('engine')} {...register('engine', {required: 'Engine type is required'})} value={engine} control={<Radio />} label={engine} />))}
+              <RadioGroup row aria-label="engine">
+              {engineTypes.map((engine) => (
+                <FormControlLabel
+                  key={engine}
+                  checked={engine === watch('engine')}
+                  {...register('engine', { required: 'Engine type is required' })}
+                  value={engine}
+                  control={<Radio />}
+                  label={engine}
+                />
+              ))}
+            </RadioGroup>
+            {errors.engine && <Alert severity="error">{errors.engine.message}</Alert>}
 
-              </RadioGroup>
+
             </FormControl>
 
             <Stack direction="row" spacing={2} sx={{ display: 'flex', justifyContent: 'center' }}>
