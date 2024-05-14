@@ -9,11 +9,9 @@ export interface Car { // Car object fields
 export interface Motorcycle {
     maker: string;
     model: string;
-    year: number;
+    year: string;
     engine: string;
 }
-
-export const makers = ['Honda', 'Yamaha', 'Suzuki', 'Kawasaki', 'Ducati'];
 
 export const engineTypes = ['Petrol', 'Diesel', 'Electric'] // Engine types
 
