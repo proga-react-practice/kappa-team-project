@@ -6,6 +6,7 @@ interface MotoContextProps {
     setMotorcycles: (cars: Motorcycle[]) => void,
     addMotorcycle: (cars: Motorcycle) => void,
     deleteMotorcycle: (index: number) => void,
+    favoriteMotorcycle: (index: number) => void,
     saveChanges: (editedMoto: Motorcycle, editIndex: number) => void
 }
 
@@ -19,6 +20,7 @@ export const MotoContext = createContext<MotoContextProps>(
         setMotorcycles: () => {},
         addMotorcycle: () => {},
         deleteMotorcycle: () => {},
+        favoriteMotorcycle: () => {},
         saveChanges: () => {}
     }
 )
@@ -41,8 +43,14 @@ export default function MotoProvider({children}: CarsProviderProps) {
         setMotorcycles(newMotorcycles);
       };
 
+      const favoriteMotorcycle = (index: number) => {
+        const newMotorcycles = [...Motorcycles];
+        newMotorcycles[index].favorite = !newMotorcycles[index].favorite;
+        setMotorcycles(newMotorcycles);
+      }
+
     return (
-        <MotoContext.Provider value={{Motorcycles, setMotorcycles, addMotorcycle, deleteMotorcycle, saveChanges}}>
+        <MotoContext.Provider value={{Motorcycles, setMotorcycles, addMotorcycle, deleteMotorcycle, saveChanges, favoriteMotorcycle}}>
             {children}
         </MotoContext.Provider>
     )

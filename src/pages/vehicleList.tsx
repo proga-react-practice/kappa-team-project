@@ -4,8 +4,11 @@ import { MotoContext } from "../components/providers/motoProvider";
 import { DataGrid, GridActionsCellItem, GridColDef, GridRowId } from '@mui/x-data-grid';
 import { Box, Typography } from "@mui/material";
 import { Car, engineTypes, Motorcycle } from "../lib/types";
-
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import FavoriteIcon from '@mui/icons-material/Favorite';
 import DeleteIcon from '@mui/icons-material/Delete';
+import TwoWheeler from "@mui/icons-material/TwoWheeler";
+import DirectionsCarIcon from '@mui/icons-material/DirectionsCar';
 
 export function VehicleList() {
     const { cars, setCars, deleteCar } = useContext(CarsContext)
@@ -30,11 +33,12 @@ export function VehicleList() {
     }
 
     const columns: GridColDef[] = [
-        { field: 'type', headerName: 'Type', width: 150},
+        { field: 'type', headerName: 'Type', width: 50, renderCell: (params) => params.row.type === "Car" ? <DirectionsCarIcon sx={{color: 'primary.main'}}/> : <TwoWheeler  sx={{color: 'primary.main'}}/>},
         { field: 'model', headerName: 'Model', width: 150, editable: true },
         { field: 'maker', headerName: 'Maker', width: 150 },
         { field: 'year', headerName: 'Year', width: 150, editable: true },
         { field: 'engine', headerName: 'Engine', width: 150, editable: true, type: 'singleSelect', valueOptions: engineTypes },
+        { field: 'favorite', headerName: 'Favorite', width: 150, type: 'boolean', editable: true, renderCell: (params) => params.row.favorite ? <FavoriteIcon sx={{color: 'primary.main'}}/> : <FavoriteBorderIcon  sx={{color: 'primary.main'}}/>},
         {field: 'actions', type: "actions", headerName: '', width: 50, cellClassName: 'actions', getActions: ({id}) => {
             return [
                 <GridActionsCellItem
@@ -60,10 +64,10 @@ export function VehicleList() {
                     rows={rows}
                     columns={columns}
                     pageSizeOptions={[5]}
-                    checkboxSelection
                     disableRowSelectionOnClick
                     processRowUpdate={handleRowUpdate}
                     onProcessRowUpdateError={(params) => {console.log(params)}}
+                    editMode="row"
                 />
             </Box>
         </Box>

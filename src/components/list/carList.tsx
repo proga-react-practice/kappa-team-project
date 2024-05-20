@@ -4,6 +4,8 @@ import EditIcon from '@mui/icons-material/Edit';
 import { useContext, useEffect, useState } from 'react';
 import { DragDropContext, Draggable, Droppable, DropResult, OnDragEndResponder } from 'react-beautiful-dnd';
 import { CarsContext } from '../providers/carsProvider';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import FavoriteIcon from '@mui/icons-material/Favorite';
 
 interface CarListProps {
     handleEdit: (i: number) => void
@@ -12,7 +14,7 @@ interface CarListProps {
 export default function CarList({ handleEdit }: CarListProps) {
     const [droppableId, setDroppableId] = useState<string>('')
 
-    const { cars, deleteCar, moveCar } = useContext(CarsContext)
+    const { cars, deleteCar, moveCar, toggleFavoriteCar } = useContext(CarsContext)
 
     useEffect(() => {
         setDroppableId('car-list')
@@ -64,6 +66,7 @@ export default function CarList({ handleEdit }: CarListProps) {
                                                         <Typography><b>Engine: </b> {car.engine}</Typography>
                                                     </Container>
                                                     <ButtonGroup orientation='vertical'>
+                                                        <IconButton color='error' onClick={() => {toggleFavoriteCar(i)}}>{car.favorite ? <FavoriteIcon/> : <FavoriteBorderIcon/>}</IconButton>
                                                         <IconButton color='warning' onClick={() => {handleEdit(i)}}><EditIcon /></IconButton>
                                                         <IconButton color='error' onClick={() => {handleDelete(i)}}><DeleteIcon /></IconButton>
                                                     </ButtonGroup>

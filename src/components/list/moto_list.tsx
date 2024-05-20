@@ -4,6 +4,8 @@ import CardContent from '@mui/material/CardContent';
 import Collapse from '@mui/material/Collapse';
 import { Typography, Box, IconButton } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import FavoriteIcon from '@mui/icons-material/Favorite';
 import TwoWheelerIcon from '@mui/icons-material/TwoWheeler';
 import EditIcon from '@mui/icons-material/Edit';
 import MotoEditDialog from '../dialog/motoEditDialog'; // Assuming the dialog component is in the same directory
@@ -15,7 +17,7 @@ export default function MotorcycleList() {
   const [editDialogOpen, setEditDialogOpen] = useState(false);
   const [editIndex, setEditIndex] = useState<number | null>(null);
 
-  const { Motorcycles, setMotorcycles, deleteMotorcycle, saveChanges } = useContext(MotoContext);
+  const { Motorcycles, setMotorcycles, deleteMotorcycle, saveChanges, favoriteMotorcycle } = useContext(MotoContext);
 
   const dragItem = React.useRef<number | null>(null);
   const dragOverItem = React.useRef<number | null>(null);
@@ -64,6 +66,9 @@ export default function MotorcycleList() {
                   </IconButton>
                   <IconButton color="warning" onClick={() => handleEditClick(index)}>
                     <EditIcon />
+                  </IconButton>
+                  <IconButton color='error' onClick={() => {favoriteMotorcycle(index)}}>
+                    {motorcycle.favorite ? <FavoriteIcon/> : <FavoriteBorderIcon/>}
                   </IconButton>
                 </Box>
               </Box>

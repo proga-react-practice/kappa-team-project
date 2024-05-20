@@ -10,6 +10,7 @@ interface CarsContextProps {
     editCar: (index: number | null, car: Car) => void,
     moveCar: (from: number, to: number) => void,
     revertTo: (index: number) => void,
+    toggleFavoriteCar: (index: number) => void,
     history: Car[][],
     commitIndex: number
 }
@@ -27,6 +28,7 @@ export const CarsContext = createContext<CarsContextProps>(
         editCar: () => {},
         moveCar: () => {},
         revertTo: () => {},
+        toggleFavoriteCar: () => {},
         history: [],
         commitIndex: 0
     }
@@ -58,8 +60,12 @@ export default function CarsProvider({children}: CarsProviderProps) {
 		setCars(newCars)
 	}
 
+    function toggleFavoriteCar(i: number) { // Function to favorite a car
+        setCars(cars.map((car, index) => index === i ? {...car, favorite: !car.favorite} : car))
+    }
+
     return (
-        <CarsContext.Provider value={{cars, setCars, revertTo, history, commitIndex, addCar, deleteCar, editCar, moveCar}}>
+        <CarsContext.Provider value={{cars, setCars, revertTo, history, commitIndex, addCar, deleteCar, editCar, moveCar, toggleFavoriteCar}}>
             {children}
         </CarsContext.Provider>
     )
