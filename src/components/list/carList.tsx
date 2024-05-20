@@ -6,6 +6,7 @@ import { DragDropContext, Draggable, Droppable, DropResult, OnDragEndResponder }
 import { CarsContext } from '../providers/carsProvider';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
+import { LocaleContext } from '../providers/localeProvider';
 
 interface CarListProps {
     handleEdit: (i: number) => void
@@ -15,6 +16,8 @@ export default function CarList({ handleEdit }: CarListProps) {
     const [droppableId, setDroppableId] = useState<string>('')
 
     const { cars, deleteCar, moveCar, toggleFavoriteCar } = useContext(CarsContext)
+    const { translation } = useContext(LocaleContext)
+    const f = translation.form
 
     useEffect(() => {
         setDroppableId('car-list')
@@ -60,10 +63,10 @@ export default function CarList({ handleEdit }: CarListProps) {
                                             <CardContent>
                                                 <Box display='flex'>
                                                     <Container>
-                                                        <Typography><b>Maker: </b>{car.maker}</Typography>
-                                                        <Typography><b>Model: </b> {car.model}</Typography>
-                                                        <Typography><b>Year: </b> {car.year}</Typography>
-                                                        <Typography><b>Engine: </b> {car.engine}</Typography>
+                                                        <Typography><b>{f.maker}: </b>{car.maker}</Typography>
+                                                        <Typography><b>{f.model}: </b> {car.model}</Typography>
+                                                        <Typography><b>{f.year}: </b> {car.year}</Typography>
+                                                        <Typography><b>{f.engine}: </b> {car.engine}</Typography>
                                                     </Container>
                                                     <ButtonGroup orientation='vertical'>
                                                         <IconButton color='error' onClick={() => {toggleFavoriteCar(i)}}>{car.favorite ? <FavoriteIcon/> : <FavoriteBorderIcon/>}</IconButton>

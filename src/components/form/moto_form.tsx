@@ -2,15 +2,17 @@ import { Motorcycle  } from '../../lib/types';
 import { Button, Stack, Typography, Alert, TextField, FormControlLabel, Radio, FormControl, FormLabel, Select, Paper, Card, RadioGroup, MenuItem } from '@mui/material';
 import ClearIcon from '@mui/icons-material/Clear';
 import InputLabel from '@mui/material/InputLabel';
-import { useEffect, } from 'react'; 
+import { useContext, useEffect, } from 'react'; 
 import { useForm,  } from "react-hook-form";
-import { engineTypes, makers } from '../../lib/constants';
+import {  makers } from '../../lib/constants';
+import { LocaleContext } from '../providers/localeProvider';
 
 const initialMotorcycleState: Motorcycle = {
   maker: '',
   model: '',
   year: '',
   engine: '',
+  favorite: false,
 };
 
 interface MotorcycleFormProps {
@@ -18,8 +20,15 @@ interface MotorcycleFormProps {
 
 }
 export default function MotorcycleForm({ addMotorcycle }: MotorcycleFormProps) {
-  const {
-  handleSubmit,  register,   reset,   formState: { errors },  watch, } = useForm<Motorcycle>({ defaultValues: initialMotorcycleState });
+  const {handleSubmit,  register,   reset,   formState: { errors },  watch, } = useForm<Motorcycle>({ defaultValues: initialMotorcycleState });
+  const { translation } = useContext(LocaleContext)
+  const f = translation.form
+  const m = translation.moto_form
+  const e = translation.error
+
+  const engineTypes = [f.petrol,f.diesel,f.electric] // Engine types
+
+  
   const onSubmit = (data: Motorcycle) => {
     addMotorcycle({ ...data });
     reset();
@@ -36,60 +45,64 @@ export default function MotorcycleForm({ addMotorcycle }: MotorcycleFormProps) {
       <Paper sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: 3 }}>
         <form onSubmit={handleSubmit(onSubmit)}>
           <Stack direction="column" spacing={2}>
-            <Typography variant='h4' sx={{ margin: 1, padding: 1 }}>Add Motorcycle</Typography>
+            <Typography variant='h4' sx={{ margin: 1, padding: 1 }}>{m.title} </Typography>
 
             <FormControl>
-              <InputLabel htmlFor="make" color="secondary">Maker</InputLabel>
+              <InputLabel htmlFor="make" color="secondary">{f.maker}</InputLabel>
               <Select
                 id="make"
-                label="Make"
-                {...register('maker', { required: 'Make is required' })}
+                label={f.maker}
+                {...register('maker', { required: e.maker_error })}
                 value={watch('maker') || ''}
                 
                 error={!!errors.maker}
                 color="secondary"
               >
-              <MenuItem value="">Select Maker</MenuItem>
+              <MenuItem value="">{f.select_maker}</MenuItem>
                 {makers.map((maker) => (
-                  <MenuItem key={maker} value={maker} {...register('maker', { required: 'Make is required' })}>
+                  <MenuItem key={maker} value={maker} {...register('maker', { required: e.maker_error  })} >
                     {maker}
                   </MenuItem>
                 ))}
               </Select>
+              
               {errors.maker && <Alert severity="error">{errors.maker.message}</Alert>}
             </FormControl>
 
             <TextField
               id="model"
-              label="Model"
-              color='secondary'
-              {...register('model', { required: 'Model is required', minLength: { value: 1, message: 'Model must be at least 1 characters long' }, maxLength: { value: 15, message: 'Model must be at most 15 characters long' } })}
+              label={f.model}
+              {...register('model', { required: e.model_error , minLength: { value: 2, message: e.model_2ch_error }, maxLength: { value: 15, message: e.model_15ch_error } })}
+              error={errors.model !== undefined}
+              helperText={errors.model?.message?.toString() }
+
             />
-            {errors.model && <Alert severity="error">{errors.model.message}</Alert>}
 
             <TextField
               type="number"
               id="year"
-              label="Year"
-              {...register('year', {required: 'Year is required', min: {value: 1900, message: 'Year must be greater than 1900'}, max: {value: new Date().getFullYear(), message: `Year must be less than ${new Date().getFullYear()}`}, pattern: {value: /^\d{4}$/, message: 'Year must be a 4 digit number'}})}
+              label={f.year}
+              {...register('year', {required: e.year_error , min: {value: 1900, message: e.year_error_1900}, max: {value: new Date().getFullYear(), message: `${e.year_less_error} ${new Date().getFullYear()}`}, pattern: {value: /^\d{4}$/, message: e.year_4num_error}})}
               error={errors.year !== undefined}
               helperText={errors.year?.message?.toString()}
             />
-            {errors.year && <Alert severity="error">{errors.year.message}</Alert>}
 
             <FormControl required component="fieldset">
-              <FormLabel color="secondary" component="legend">Engine Type</FormLabel>
+              <FormLabel color="secondary" component="legend">{f.engine_text}</FormLabel>
               <RadioGroup row aria-label="engine">
+                
               {engineTypes.map((engine) => (
                 <FormControlLabel
                   key={engine}
                   checked={engine === watch('engine')}
-                  {...register('engine', { required: 'Engine type is required' })}
+                  {...register('engine', { required: e.engine_error })}
                   value={engine}
                   control={<Radio />}
                   label={engine}
+
                 />
               ))}
+
             </RadioGroup>
             {errors.engine && <Alert severity="error">{errors.engine.message}</Alert>}
 
@@ -98,10 +111,10 @@ export default function MotorcycleForm({ addMotorcycle }: MotorcycleFormProps) {
 
             <Stack direction="row" spacing={2} sx={{ display: 'flex', justifyContent: 'center' }}>
               <Button variant="contained" type="submit" color='primary'>
-                Submit
+                {m.submit}
               </Button>
               <Button variant="contained" onClick={handleReset} startIcon={<ClearIcon />} color='secondary'>
-                Clear
+                {m.clear}
               </Button>
             </Stack>
           </Stack>

@@ -9,10 +9,12 @@ import TimelineConnector from '@mui/lab/TimelineConnector';
 import TimelineContent from '@mui/lab/TimelineContent';
 import TimelineDot from '@mui/lab/TimelineDot';
 import { CarsContext } from '../providers/carsProvider';
+import { LocaleContext } from '../providers/localeProvider';
 
 export default function CarHistory(){
     const [open, setOpen] = useState(false)
-
+    const { translation } = useContext(LocaleContext)
+    const f = translation.form
     const { history, commitIndex, revertTo } = useContext(CarsContext)
 
     const handleClose = () => {
@@ -23,7 +25,7 @@ export default function CarHistory(){
         <>
             {history.length > 1 && <IconButton color='primary' onClick={() => setOpen(true)}><AccountTreeIcon/></IconButton>}
             <Dialog open={open} onClose={handleClose}>
-                <DialogTitle>Commits History</DialogTitle>
+                <DialogTitle>{f.commit_hist}</DialogTitle>
                 <DialogContent>
                     <Timeline position='alternate' sx={{width: 500}}>
                         {history.map((cars, i) => (
@@ -34,16 +36,16 @@ export default function CarHistory(){
                                 </TimelineSeparator>
                                 <TimelineContent>
                                     <Button onClick={() => revertTo(i)}>
-                                        <Typography>Commit {i}</Typography>
+                                        <Typography>{f.commit} {i}</Typography>
                                     </Button>
                                     <SimpleTreeView>
-                                        <TreeItem label={`Cars (${cars.length})`} itemId='main'>
+                                        <TreeItem label={` ${f.cars } (${cars.length})`} itemId='main'>
                                             {cars.map((car, j) => (
                                                 <TreeItem key={j} itemId={j.toString()} label={car.model}>
-                                                    <Typography><b>Model:</b> {car.model}</Typography>
-                                                    <Typography><b>Maker:</b> {car.maker}</Typography>
-                                                    <Typography><b>Year:</b> {car.year}</Typography>
-                                                    <Typography><b>Engine:</b> {car.engine}</Typography>
+                                                    <Typography><b>{f.model}:</b> {car.model}</Typography>
+                                                    <Typography><b>{f.maker}:</b> {car.maker}</Typography>
+                                                    <Typography><b>{f.year}:</b> {car.year}</Typography>
+                                                    <Typography><b>{f.engine}:</b> {car.engine}</Typography>
                                                 </TreeItem>
                                             ))}
                                         </TreeItem>

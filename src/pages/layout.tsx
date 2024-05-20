@@ -55,6 +55,7 @@ export default function Layout() {
                             <MenuItem ><Link to="/"><IconButton size="large" sx={{color: 'primary.main'}}><HomeIcon/></IconButton></Link></MenuItem>
                             <MenuItem ><Link to="cars"><Button size="medium" startIcon={<DirectionsCarIcon />} sx={{color: 'primary.main'}} href="vlad"></Button></Link></MenuItem>
                             <MenuItem ><Link to="moto"><Button size="medium" startIcon={<TwoWheelerIcon/>} sx={{color: 'primary.main'}} href="ira"></Button></Link></MenuItem>
+                            <MenuItem>                    <Link to="list"><Button startIcon={<ListIcon/>} sx={{color: 'primary.main'}} href="ira"></Button></Link></MenuItem>
                         </MenuList>
 
                     </Menu>

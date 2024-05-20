@@ -11,6 +11,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import MotoEditDialog from '../dialog/motoEditDialog'; // Assuming the dialog component is in the same directory
 
 import { MotoContext } from '../providers/motoProvider';
+import { LocaleContext } from '../providers/localeProvider';
 
 
 export default function MotorcycleList() {
@@ -18,6 +19,8 @@ export default function MotorcycleList() {
   const [editIndex, setEditIndex] = useState<number | null>(null);
 
   const { Motorcycles, setMotorcycles, deleteMotorcycle, saveChanges, favoriteMotorcycle } = useContext(MotoContext);
+  const { translation } = useContext(LocaleContext)
+  const f = translation.form
 
   const dragItem = React.useRef<number | null>(null);
   const dragOverItem = React.useRef<number | null>(null);
@@ -73,16 +76,16 @@ export default function MotorcycleList() {
                 </Box>
               </Box>
               <Typography variant="body1" sx={{ textAlign: 'left' }}>
-                <strong>Maker:</strong> {motorcycle.maker}
+                <strong>{f.maker}:</strong> {motorcycle.maker}
               </Typography>
               <Typography variant="body1" sx={{ textAlign: 'left' }}>
-                <strong>Model:</strong> {motorcycle.model}
+                <strong>{f.model}:</strong> {motorcycle.model}
               </Typography>
               <Typography variant="body1" sx={{ textAlign: 'left' }}>
-                <strong>Year:</strong> {motorcycle.year}
+                <strong>{f.year}:</strong> {motorcycle.year}
               </Typography>
               <Typography variant="body1" sx={{ textAlign: 'left' }}>
-                <strong>Engine:</strong> {motorcycle.engine}
+                <strong>{f.engine}:</strong> {motorcycle.engine}
               </Typography>
             </CardContent>
           </Card>

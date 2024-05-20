@@ -5,6 +5,7 @@ import { FormFields } from '../form/carForm';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { useContext, useEffect } from 'react';
 import { CarsContext } from '../providers/carsProvider';
+import { LocaleContext } from '../providers/localeProvider';
 
 interface CarEditDialogProps {
     open: boolean
@@ -13,7 +14,8 @@ interface CarEditDialogProps {
 }
 
 export default function CarEditDialog({open, handleClose, editIndex} : CarEditDialogProps){
-
+    const { translation } = useContext(LocaleContext)
+    const f = translation.form
     const { editCar, cars } = useContext(CarsContext)
 
     const carData = editIndex !== null ? cars[editIndex] : undefined
@@ -35,14 +37,14 @@ export default function CarEditDialog({open, handleClose, editIndex} : CarEditDi
     return (
             <Dialog open={open} onClose={handleClose}>
                 <form onSubmit={submit(onSubmit)}>
-                    <DialogTitle>Edit Car</DialogTitle>
+                    <DialogTitle>{f.editcar}</DialogTitle>
                     <DialogContent>
                         <FormFields register={register} errors={formState.errors} watch={watch} setValue={setValue} />
                     </DialogContent>
                     <DialogActions>
-                        <Button onClick={handleClose}>Cancel</Button>
-                        <Button onClick={handleReset}>Reset</Button>
-                        <Button type='submit'>Save</Button>
+                        <Button onClick={handleClose}>{f.cancel}</Button>
+                        <Button onClick={handleReset}>{f.reset}</Button>
+                        <Button type='submit'>{f.save}</Button>
                     </DialogActions>
                 </form>
             </Dialog>
