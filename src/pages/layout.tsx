@@ -7,13 +7,17 @@ import ListIcon from '@mui/icons-material/List';
 
 import { Link, Outlet } from "react-router-dom"
 import themes from "../themes"
-import { useState } from "react"
+import { useState, useContext } from "react"
+import { LocaleContext } from "../components/providers/localeProvider";
 
 import CarsProvider from "../components/providers/carsProvider";
 import MotoProvider from "../components/providers/motoProvider";
 
 
+
 export default function Layout() {
+    const { changeLocale, translation } = useContext(LocaleContext)
+    const t = translation.layout
 
     const [themeIndex, setThemeIndex] = useState(0)
 
@@ -36,10 +40,11 @@ export default function Layout() {
             <AppBar sx ={{bgcolor: "background.default"}}>
                 <Toolbar sx={{height: 'auto', width: 'auto', margin: 0,   justifyContent: "start", gap: 10,  display:{xs:'none', md:'flex'}}}>
                     <Link to="/"><IconButton sx={{color: 'primary.main'}}><HomeIcon/></IconButton></Link>
-                    <Link to="cars"><Button startIcon={<DirectionsCarIcon/>} sx={{color: 'primary.main'}} href="vlad">Cars</Button></Link>
-                    <Link to="moto"><Button startIcon={<TwoWheelerIcon/>} sx={{color: 'primary.main'}} href="ira">Motorcycles</Button></Link>
-                    <Link to="list"><Button startIcon={<ListIcon/>} sx={{color: 'primary.main'}} href="ira">List</Button></Link>
-                    <IconButton sx={{color: 'primary.main', marginLeft: "auto"}} onClick={changeTheme}>{themes[themeIndex].icon}</IconButton>
+                    <Link to="cars"><Button startIcon={<DirectionsCarIcon/>} sx={{color: 'primary.main'}} href="vlad">{t.cars}</Button></Link>
+                    <Link to="moto"><Button startIcon={<TwoWheelerIcon/>} sx={{color: 'primary.main'}} href="ira">{t.moto}</Button></Link>
+                    <Link to="list"><Button startIcon={<ListIcon/>} sx={{color: 'primary.main'}} href="ira">{t.list}</Button></Link>
+                    <Button sx={{color: 'primary.main', marginLeft: "auto"}} onClick={changeLocale}>{t.lang_name}</Button>
+                    <IconButton sx={{color: 'primary.main'}} onClick={changeTheme}>{themes[themeIndex].icon}</IconButton>
                 </Toolbar>
                 <Box sx= {{display:{xs:'flex', md:'none'}, padding:3,  }}>
                     <IconButton edge="start" sx={{color: 'primary.main'}} onClick={handleOpenNavMenu}>
@@ -53,6 +58,7 @@ export default function Layout() {
                         </MenuList>
 
                     </Menu>
+                    <Button sx={{color: 'primary.main'}} onClick={changeLocale}>{t.lang_name}</Button>
                     <IconButton sx={{color: 'primary.main'}} onClick={changeTheme}>{themes[themeIndex].icon}</IconButton>
 
                 </Box>

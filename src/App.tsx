@@ -7,22 +7,26 @@ import NotFoundPage from './pages/not-found'
 
 import './App.css'
 import { VehicleList } from './pages/vehicleList'
+import { locales, translations } from "./locales"
+import LocaleProvider from "./components/providers/localeProvider"
 
 
 function App() {
 
 	return (
-		<BrowserRouter>
-			<Routes>
-				<Route path="/" element={<Layout />}>
-					<Route index element={<Home />} />
-					<Route path="cars" element={<CarsPage />} />
-					<Route path="moto" element={<MotoPage />} />
-					<Route path="*" element={<NotFoundPage />} />
-					<Route path="list" element={<VehicleList />} />
-				</Route>
-			</Routes>
-		</BrowserRouter>
+		<LocaleProvider locales={locales} translations={translations}>
+			<BrowserRouter>
+				<Routes>
+					<Route path="/" element={<Layout />}>
+						<Route index element={<Home />} />
+						<Route path="cars" element={<CarsPage />} />
+						<Route path="moto" element={<MotoPage />} />
+						<Route path="*" element={<NotFoundPage />} />
+						<Route path="list" element={<VehicleList />} />
+					</Route>
+				</Routes>
+			</BrowserRouter>
+		</LocaleProvider>
 	)
 }
 

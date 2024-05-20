@@ -6,6 +6,7 @@ import { Button, ButtonGroup, FormControl, FormControlLabel, FormHelperText, For
 import { useForm, SubmitHandler, FieldErrors, UseFormRegister, UseFormWatch, UseFormSetValue } from "react-hook-form";
 import { useContext } from 'react';
 import { CarsContext } from '../providers/carsProvider';
+import { LocaleContext } from '../providers/localeProvider';
 
 interface FormFieldsProps {
     register: UseFormRegister<Car>
@@ -15,12 +16,14 @@ interface FormFieldsProps {
 }
 
 export function FormFields({register, errors, watch, setValue} : FormFieldsProps) {
+    const { translation } = useContext(LocaleContext)
+    const t = translation.car_form
     
     return (
         <>
             <TextField
                 sx={{marginY: 1}}
-                label='Maker'
+                label={t.maker}
                 select
                 fullWidth
                 {...register('maker')}
@@ -65,6 +68,8 @@ export function FormFields({register, errors, watch, setValue} : FormFieldsProps
 }
 
 export default function CarForm(){
+    const { translation } = useContext(LocaleContext)
+    const t = translation.car_form
 
     const { addCar } = useContext(CarsContext)
 
@@ -83,7 +88,7 @@ export default function CarForm(){
         <form onSubmit={submit(onSubmit)}>
             <Card sx={{overflowY: "auto", scrollbarColor: (theme) => `${theme.palette.primary.main} ${theme.palette.background.default}`}}>
                 <CardContent sx={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
-                    <Typography variant='h4' sx={{margin: 1}}>Add Car</Typography>
+                    <Typography variant='h4' sx={{margin: 1}}>{t.title}</Typography>
                 
                     
                         <FormFields register={register} errors={formState.errors} watch={watch} setValue={setValue} />
