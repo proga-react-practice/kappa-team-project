@@ -1,4 +1,4 @@
-import { Car, emptyCar, engineTypes } from '../../lib/types'
+import { Car, emptyCar, engineTypes, carMakers } from '../../lib/types'
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import TextField from '@mui/material/TextField';
@@ -23,16 +23,16 @@ export function FormFields({register, errors, watch, setValue} : FormFieldsProps
                 label='Maker'
                 select
                 fullWidth
-                {...register('maker', {required: 'Maker is required'})}
+                {...register('maker')}
                 onChange={(e) => {setValue('maker', e.target.value)}}
                 value={watch('maker') || ''}
                 error={errors.maker !== undefined}
                 
                 helperText={errors.maker?.message?.toString()}>
                     <MenuItem value="">Select Maker</MenuItem>
-                    <MenuItem value="Toyota">Toyota</MenuItem>
-                    <MenuItem value="Honda">Honda</MenuItem>
-                    <MenuItem value="Ford">Ford</MenuItem>
+                    {carMakers.map((maker) => (
+                        <MenuItem value={maker}>{maker}</MenuItem>
+                    ))}
             </TextField>
             <TextField
                 sx={{marginY: 1}}

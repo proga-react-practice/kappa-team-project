@@ -6,6 +6,7 @@ import MotoPage from './pages/moto'
 import NotFoundPage from './pages/not-found'
 
 import './App.css'
+import { VehicleList } from './pages/vehicleList'
 
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
 					<Route path="cars" element={<CarsPage />} />
 					<Route path="moto" element={<MotoPage />} />
 					<Route path="*" element={<NotFoundPage />} />
+					<Route path="list" element={<VehicleList />} />
 				</Route>
 			</Routes>
 		</BrowserRouter>

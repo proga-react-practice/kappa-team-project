@@ -3,6 +3,7 @@ import HomeIcon from '@mui/icons-material/Home';
 import DirectionsCarIcon from '@mui/icons-material/DirectionsCar';
 import TwoWheelerIcon from '@mui/icons-material/TwoWheeler';
 import MenuIcon from '@mui/icons-material/Menu';
+import ListIcon from '@mui/icons-material/List';
 
 import { Link, Outlet } from "react-router-dom"
 import themes from "../themes"
@@ -37,6 +38,7 @@ export default function Layout() {
                     <Link to="/"><IconButton sx={{color: 'primary.main'}}><HomeIcon/></IconButton></Link>
                     <Link to="cars"><Button startIcon={<DirectionsCarIcon/>} sx={{color: 'primary.main'}} href="vlad">Cars</Button></Link>
                     <Link to="moto"><Button startIcon={<TwoWheelerIcon/>} sx={{color: 'primary.main'}} href="ira">Motorcycles</Button></Link>
+                    <Link to="list"><Button startIcon={<ListIcon/>} sx={{color: 'primary.main'}} href="ira">List</Button></Link>
                     <IconButton sx={{color: 'primary.main', marginLeft: "auto"}} onClick={changeTheme}>{themes[themeIndex].icon}</IconButton>
                 </Toolbar>
                 <Box sx= {{display:{xs:'flex', md:'none'}, padding:3,  }}>
