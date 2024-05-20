@@ -36,6 +36,7 @@ const MotoEditDialog: React.FC<MotoEditDialogProps> = ({ open, handleClose, moto
     if (motoData) {
       reset(motoData);
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [motoData]);
 
   const handleSaveEdit = (data:Motorcycle) => {

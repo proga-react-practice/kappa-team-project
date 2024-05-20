@@ -1,19 +1,18 @@
 import { Card, CardContent, Container, Box, List, ListItem, Slide, Typography, ButtonGroup, IconButton } from '@mui/material'
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
-import { Car } from '../../lib/types'
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { DragDropContext, Draggable, Droppable, DropResult, OnDragEndResponder } from 'react-beautiful-dnd';
+import { CarsContext } from '../providers/carsProvider';
 
 interface CarListProps {
-    cars: Car[]
-    deleteCar: (i: number) => void
-    editCar: (i: number) => void
-    moveCar: (from: number, to: number) => void
+    handleEdit: (i: number) => void
 }
 
-export default function CarList({ cars, deleteCar, editCar, moveCar } : CarListProps) {
+export default function CarList({ handleEdit }: CarListProps) {
     const [droppableId, setDroppableId] = useState<string>('')
+
+    const { cars, deleteCar, moveCar } = useContext(CarsContext)
 
     useEffect(() => {
         setDroppableId('car-list')
@@ -31,10 +30,6 @@ export default function CarList({ cars, deleteCar, editCar, moveCar } : CarListP
         setTimeout(() => {
             deleteCar(i)
         }, 500)
-    }
-
-    const handleEdit = (i : number) => { // Function to animate car edition from the list
-        editCar(i)
     }
 
     const onDragEnd: OnDragEndResponder = (result: DropResult) => {

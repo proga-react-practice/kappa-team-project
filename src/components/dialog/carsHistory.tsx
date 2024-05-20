@@ -1,5 +1,4 @@
-import { Car } from '../../lib/types';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { Button, Dialog, DialogContent, DialogTitle, IconButton, Typography } from '@mui/material'
 import { SimpleTreeView, TreeItem } from '@mui/x-tree-view';
 import AccountTreeIcon from '@mui/icons-material/AccountTree';
@@ -9,15 +8,12 @@ import TimelineSeparator from '@mui/lab/TimelineSeparator';
 import TimelineConnector from '@mui/lab/TimelineConnector';
 import TimelineContent from '@mui/lab/TimelineContent';
 import TimelineDot from '@mui/lab/TimelineDot';
+import { CarsContext } from '../providers/carsProvider';
 
-interface CarHistoryProps {
-    history: Car[][],
-    revertTo: (index: number) => void,
-    currentIndex: number
-}
-
-export default function CarHistory({history, revertTo, currentIndex} : CarHistoryProps){
+export default function CarHistory(){
     const [open, setOpen] = useState(false)
+
+    const { history, commitIndex, revertTo } = useContext(CarsContext)
 
     const handleClose = () => {
         setOpen(false)
@@ -33,7 +29,7 @@ export default function CarHistory({history, revertTo, currentIndex} : CarHistor
                         {history.map((cars, i) => (
                             <TimelineItem key={i}>
                                 <TimelineSeparator>
-                                    <TimelineDot color={i === currentIndex ? 'primary' : 'secondary'} />
+                                    <TimelineDot color={i === commitIndex ? 'primary' : 'secondary'} />
                                     {i !== history.length - 1 && <TimelineConnector sx={{ backgroundColor:'secondary.main' }} />}
                                 </TimelineSeparator>
                                 <TimelineContent>

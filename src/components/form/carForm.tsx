@@ -4,8 +4,8 @@ import CardContent from '@mui/material/CardContent';
 import TextField from '@mui/material/TextField';
 import { Button, ButtonGroup, FormControl, FormControlLabel, FormHelperText, FormLabel, MenuItem, Radio, RadioGroup, Typography } from '@mui/material';
 import { useForm, SubmitHandler, FieldErrors, UseFormRegister, UseFormWatch, UseFormSetValue } from "react-hook-form";
-
-interface CarFormProps { addCar: (car: Car) => void }
+import { useContext } from 'react';
+import { CarsContext } from '../providers/carsProvider';
 
 interface FormFieldsProps {
     register: UseFormRegister<Car>
@@ -15,6 +15,7 @@ interface FormFieldsProps {
 }
 
 export function FormFields({register, errors, watch, setValue} : FormFieldsProps) {
+    
     return (
         <>
             <TextField
@@ -63,7 +64,9 @@ export function FormFields({register, errors, watch, setValue} : FormFieldsProps
     )
 }
 
-export default function CarForm({ addCar } : CarFormProps){
+export default function CarForm(){
+
+    const { addCar } = useContext(CarsContext)
 
     const { register, handleSubmit: submit, formState, reset, watch, setValue } = useForm<Car>({defaultValues: emptyCar})
     const onSubmit: SubmitHandler<Car> = (data) => {

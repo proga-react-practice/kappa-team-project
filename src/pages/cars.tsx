@@ -1,43 +1,19 @@
 import CarForm from '../components/form/carForm'
-import { useState } from 'react'
-import { Car } from '../lib/types'
+import { useState, useContext } from 'react'
 import CarList from '../components/list/carList'
 import CarEditDialog from '../components/dialog/carEditDialog'
 import CarHistory from '../components/dialog/carsHistory'
 import { Box, Container, Divider} from '@mui/material'
-import VCV from '../lib/vcv'
+import { CarsContext } from '../components/providers/carsProvider'
 
 function CarsPage() {
-	const { state : cars, 
-		setValue : setCars, 
-		revertTo : revertCommit, 
-		history : commitHistory,
-		index: commitIndex } = VCV<Car[]>([])
 	const [editDialogOpen, setEditDialogOpen] = useState(false)
 	const [editIndex, setEditIndex] = useState<number | null>(null)
-
-	function addCar(car: Car) { // Function to add a car to the list
-		setCars([...cars, car])
-	}
-
-	function deleteCar(i: number) { // Function to delete a car from the list
-		setCars(cars.filter((_, index) => index !== i))
-	}
-	
-	function editCar(i: number | null, car: Car) { // Function to edit a car from the list
-		if (i === null) return
-		setCars(cars.map((c, index) => index === i ? car : c))
-	}
+	const { cars } = useContext(CarsContext)
 
 	function handleEdit(i: number) { // Function to handle car edition
 		setEditIndex(i)
 		setEditDialogOpen(true)
-	}
-
-	function moveCar(from: number, to: number) { // Function to move a car in the list
-		const newCars = [...cars]
-		newCars.splice(to, 0, newCars.splice(from, 1)[0])
-		setCars(newCars)
 	}
 
 	return (
@@ -45,21 +21,17 @@ function CarsPage() {
 			sx={{height: '100vh', width: '100vw', alignContent: 'center', justifyContent: "center", bgcolor: 'background.default'}}
 			className='cars-container'>
 				<Container sx={{display: 'flex', maxHeight: '80vh', flexDirection: {xs: "column", md: "row"}, justifyContent: 'center'}}>
-					<CarForm addCar={addCar} />
+					<CarForm />
 					{cars.length !== 0 && <Divider orientation='vertical' flexItem variant='middle' sx={{m: 2}} />}
 					<Box sx={{display: 'flex', flexDirection: 'column', alignItems: 'end'}}>
-						<CarHistory 
-							currentIndex={commitIndex}
-							history={commitHistory} 
-							revertTo={revertCommit}/>
-						<CarList cars={cars} deleteCar={deleteCar} editCar={handleEdit} moveCar={moveCar} />
+						<CarHistory />
+						<CarList handleEdit={handleEdit} />
 					</Box>
 				</Container>
 				<CarEditDialog 
 					open={editDialogOpen} 
 					handleClose={() => setEditDialogOpen(false)} 
-					editCar={(car) => editCar(editIndex, car)}
-					carData={editIndex !== null ? cars[editIndex] : undefined}
+					editIndex={editIndex}
 				/>
 		</Box>
 	)

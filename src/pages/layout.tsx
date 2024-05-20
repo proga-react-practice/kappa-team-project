@@ -8,6 +8,9 @@ import { Link, Outlet } from "react-router-dom"
 import themes from "../themes"
 import { useState } from "react"
 
+import CarsProvider from "../components/providers/carsProvider";
+import MotoProvider from "../components/providers/motoProvider";
+
 
 export default function Layout() {
 
@@ -52,7 +55,11 @@ export default function Layout() {
 
                 </Box>
                 <Divider />
-                <Outlet />
+                <CarsProvider>
+                    <MotoProvider>
+                        <Outlet />
+                    </MotoProvider>
+                </CarsProvider>
             </AppBar>
         </ThemeProvider>
     )

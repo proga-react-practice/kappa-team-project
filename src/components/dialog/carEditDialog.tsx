@@ -3,21 +3,25 @@ import { Dialog, DialogActions, DialogContent, DialogTitle, Button} from '@mui/m
 import { Car } from '../../lib/types';
 import { FormFields } from '../form/carForm';
 import { useForm, SubmitHandler } from 'react-hook-form';
-import { useEffect } from 'react';
+import { useContext, useEffect } from 'react';
+import { CarsContext } from '../providers/carsProvider';
 
 interface CarEditDialogProps {
     open: boolean
     handleClose: () => void
-    editCar: (car: Car) => void
-    carData?: Car
+    editIndex: number | null
 }
 
-export default function CarEditDialog({editCar, carData, open, handleClose} : CarEditDialogProps){
+export default function CarEditDialog({open, handleClose, editIndex} : CarEditDialogProps){
+
+    const { editCar, cars } = useContext(CarsContext)
+
+    const carData = editIndex !== null ? cars[editIndex] : undefined
 
     const { register, handleSubmit: submit, formState, reset, watch, setValue } = useForm<Car>({defaultValues: carData})
     
     const onSubmit: SubmitHandler<Car> = (data) => {
-        editCar(data)
+        editCar(editIndex, data)
         console.log(data)
         handleClose()
     }
