@@ -9,6 +9,7 @@ import './App.css'
 import { VehicleList } from './pages/vehicleList'
 import { locales, translations } from "./locales"
 import LocaleProvider from "./components/providers/localeProvider"
+import FeedbackForm from './pages/feedback'
 
 
 function App() {
@@ -23,6 +24,8 @@ function App() {
 						<Route path="moto" element={<MotoPage />} />
 						<Route path="*" element={<NotFoundPage />} />
 						<Route path="list" element={<VehicleList />} />
+						<Route path="feedback" element={<FeedbackForm/>} />
+
 					</Route>
 				</Routes>
 			</BrowserRouter>
