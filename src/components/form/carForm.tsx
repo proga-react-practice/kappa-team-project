@@ -1,4 +1,4 @@
-import { Car, emptyCar, carMakers } from '../../lib/types'
+import { Car, carMakers } from '../../lib/types'
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import TextField from '@mui/material/TextField';
@@ -14,6 +14,8 @@ interface FormFieldsProps {
     watch: UseFormWatch<Car>
     setValue: UseFormSetValue<Car>
 }
+
+export const emptyCar: Car = { maker: undefined, model: undefined, year: undefined, engine: undefined, favorite: false }
 
 export function FormFields({register, errors, watch, setValue} : FormFieldsProps) {
     const { translation } = useContext(LocaleContext)

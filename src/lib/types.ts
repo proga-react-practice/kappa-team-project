@@ -20,5 +20,3 @@ export const engineTypes = ['Petrol', 'Diesel', 'Electric'] // Engine types
 export const carMakers = ['Toyota', 'Honda', 'Ford']
 
 export interface FormErrors extends Car {}
-
-export const emptyCar: Car = { maker: undefined, model: undefined, year: undefined, engine: undefined, favorite: false } // Empty car object
