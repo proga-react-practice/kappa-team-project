@@ -26,15 +26,15 @@ const Footer = () => {
       bodyText: [
         {
           text: f.mui,
-          path: '',
+          path: '/coomingsoon',
         },
         {
           text: f.developers,
-          path: '',
+          path: '/coomingsoon',
         },
         {
           text: f.support,
-          path: '',
+          path: '/coomingsoon',
         },
       ],
     },
@@ -43,15 +43,15 @@ const Footer = () => {
       bodyText: [
         {
           text: f.about,
-          path: '',
+          path: '/coomingsoon',
         },
         {
           text: f.ourTeam,
-          path: '',
+          path: '/coomingsoon',
         },
         {
           text: f.contact,
-          path: '',
+          path: '/coomingsoon',
         },
         {
           text: f.feedback,
