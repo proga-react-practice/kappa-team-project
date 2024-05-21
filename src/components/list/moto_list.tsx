@@ -85,7 +85,7 @@ export default function MotorcycleList() {
                 <strong>{f.year}:</strong> {motorcycle.year}
               </Typography>
               <Typography variant="body1" sx={{ textAlign: 'left' }}>
-                <strong>{f.engine}:</strong> {motorcycle.engine}
+              <strong>{f.engine}:</strong> {motorcycle.engine}
               </Typography>
             </CardContent>
           </Card>

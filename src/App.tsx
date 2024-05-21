@@ -9,7 +9,7 @@ import './App.css'
 import { VehicleList } from './pages/vehicleList'
 import { locales, translations } from "./locales"
 import LocaleProvider from "./components/providers/localeProvider"
-import FeedbackForm from './pages/feedback'
+import FeedbackForm from './components/form/feedback_form'
 
 
 function App() {
