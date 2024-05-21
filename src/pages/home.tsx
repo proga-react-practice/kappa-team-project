@@ -3,11 +3,19 @@ import { LocaleContext } from '../components/providers/localeProvider';
 import { useContext } from 'react';
 import Footer from './footer';
 import Image from "../images/d43c11d76c7db33af616426597e88833.gif";
+import { useNavigate } from 'react-router-dom';
 
 export default function Home() {
     const { translation } = useContext(LocaleContext);
     const f = translation.page_home;
+    const navigate = useNavigate();
 
+    const handleButtonCarClick = () => {
+        navigate('/cars');
+    };
+    const handleButtonMotoClick = () => {
+        navigate('/moto');
+    };
     return (
         <Box sx={{
             bgcolor: "background.default",
@@ -40,10 +48,12 @@ export default function Home() {
                             fontSize: '0.92rem',
                         }}
                     >
-                        {f.message} <br /> {f.message1}
+                        {f.message}  <br /> 
                     </Typography>
+                    <Stack sx = {{direction : "column"}}>
                     <Button
                         variant='outlined'
+                        onClick={handleButtonCarClick}
                         sx={{
                             borderRadius: 8,
                             p: 1.3,
@@ -53,8 +63,23 @@ export default function Home() {
                             fontWeight: 600,
                         }}
                     >
-                        Get Started
+                       {f.btn_add_car}
                     </Button>
+                    <Button
+                        variant='outlined'
+                        onClick={handleButtonMotoClick}
+
+                        sx={{
+                            borderRadius: 8,
+                            p: 1.3,
+                            mt: 2,
+                            width: { xs: '100%', md: '40%' },
+                            fontSize: '1rem',
+                            fontWeight: 600,
+                        }}
+                    >
+                        {f.btn_add_moto}
+                    </Button></Stack>
                 </Box>
                 <Box  sx={{ width: {xs: "100%", md: "50%"}, height: {xs: "100%", md: "70%"},  }}   >
         <img

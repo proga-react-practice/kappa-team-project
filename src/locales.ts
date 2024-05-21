@@ -61,12 +61,26 @@ export const translations : Translations = {
         },
         page_home: {
             title: "Your own collection",
-            message: "Our team is working on a web project for collecting vehicles. This project allows you to create collections of your own cars and motorcycles.",
-            message1: "Vladyslav made a form for creating a car collection.",
-            message2: "Irina created a form to create a collection of motorcycles.",
-            message3: "To connect these two forms, we used the react-router-dom library.",
-            message4: "",
+            message: "Create your own collection of vehicles and manage them conveniently with a shared list. Add your favorite cards, edit them, and leave feedback. To get started, select one of the categories:",
+            btn_add_car: "Add Car",
+            btn_add_moto:"Add Moto"
+
+        },
+
+        footer: {
+            features: "Features",
+            linkGitHub: "Link GitHub",
+            resources: "Resources",
+            mui: "MUI",
+            developers: "Developers",
+            support: "Support",
+            company: "Company",
+            about: "About",
+            ourTeam: "Our Team",
+            contact: "Contact",
+            feedback: "Feedback"
         }
+
     },
     uk_UA: {
         layout: {
@@ -126,11 +140,25 @@ export const translations : Translations = {
         },
         page_home: {
             title: "Ваша власна колекція",
-            message: "Наша команда працює над веб-проектом для збору транспортних засобів. Цей проект дозволяє створювати колекції власних автомобілів та мотоциклів.",
-            message1: "Владислав створив форму для створення колекції автомобілів.",
-            message2: "Ірина створила форму для створення колекції мотоциклів.",
-            message3: "Для з'єднання цих двох форм ми використовували бібліотеку react-router-dom.",
-            message4: "",
+            message: "Створюйте власну колекцію транспортних засобів і зручно керуйте ними за допомогою спільного списку. Додавайте улюблені карточки, редагуйте їх та залишайте відгуки. Щоб почати, оберіть одну із категорій:",
+            btn_add_car: "Додати автомобіль",
+            btn_add_moto: "Додати мотоцикл"
+
+        },
+
+        footer: {
+            features: "Функції",
+            linkGitHub: "Посилання GitHub",
+            resources: "Ресурси",
+            mui: "MUI",
+            developers: "Розробники",
+            support: "Підтримка",
+            company: "Компанія",
+            about: "Про нас",
+            ourTeam: "Наша команда",
+            contact: "Контакти",
+            feedback: "Зворотній зв'язок"
         }
+
     },
-}
+};
