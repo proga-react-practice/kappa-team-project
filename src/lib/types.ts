@@ -14,7 +14,7 @@ export type Motorcycle = {
     year: string;
     engine: string;
     favorite: boolean;
-
+    image: string | undefined;
 }
 
 export const engineTypes = ['Petrol', 'Diesel', 'Electric'] // Engine types

@@ -81,7 +81,7 @@ export default function CarList({ handleEdit }: CarListProps) {
                     {(provided) => (
                         <List sx={{ overflowY: 'auto', 
                                 overflowX: 'hidden', 
-                                maxHeight: {xs: 200, md: 300},
+                                maxHeight: {xs: 200, md: 400},
                                 scrollbarColor: (theme) => `${theme.palette.primary.main} ${theme.palette.background.default}`}}
                             ref={provided.innerRef} {...provided.droppableProps}>
                         {filteredCars.map((car, i) => (
@@ -95,9 +95,11 @@ export default function CarList({ handleEdit }: CarListProps) {
                                             <Card sx={{width: 300}}>
                                                 <CardContent>
                                                     <Box display='flex'>
-                                                        <Box sx={{height: 100}}>
-                                                            <img src={car.image} alt={car.model} style={{height: "100%", width: "100%", objectFit: "contain"}}/>
-                                                        </Box>
+                                                        {car.image &&
+                                                            <Box sx={{height: 100}}>
+                                                                <img src={car.image} alt={car.model} style={{height: "100%", width: "100%", objectFit: "contain"}}/>
+                                                            </Box>
+                                                        }
                                                         
                                                         <Container>
                                                             <Typography><b>{f.maker}: </b>{car.maker}</Typography>
