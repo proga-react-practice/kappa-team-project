@@ -31,7 +31,8 @@ export const translations : Translations = {
             editmoto: "Edit Motorcycle",
             type: "Type",
             favorite: "Favorite",
-            vehicle_list: "Vehicle List"
+            vehicle_list: "Vehicle List",
+            upload_image: "Upload Image:"
         },
         error: {
             maker_error: "Maker is required",
@@ -110,7 +111,8 @@ export const translations : Translations = {
             editmoto: "Редагувати мотоцикл",
             type: "Тип",
             favorite: "Улюблене",
-            vehicle_list: "Список транспортних засобів"
+            vehicle_list: "Список транспортних засобів",
+            upload_image: "Завантажити зображення:"
         },
         error: {
             maker_error: "Виробник є обов'язковим",

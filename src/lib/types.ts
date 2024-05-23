@@ -5,6 +5,7 @@ export type Car = { // Car object fields
     year: number | undefined;
     engine: typeof engineTypes[number] | undefined;
     favorite: boolean;
+    image: string | undefined;
 }
 
 export type Motorcycle = {

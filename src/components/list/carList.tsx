@@ -95,6 +95,10 @@ export default function CarList({ handleEdit }: CarListProps) {
                                             <Card sx={{width: 300}}>
                                                 <CardContent>
                                                     <Box display='flex'>
+                                                        <Box sx={{height: 100}}>
+                                                            <img src={car.image} alt={car.model} style={{height: "100%", width: "100%", objectFit: "contain"}}/>
+                                                        </Box>
+                                                        
                                                         <Container>
                                                             <Typography><b>{f.maker}: </b>{car.maker}</Typography>
                                                             <Typography><b>{f.model}: </b> {car.model}</Typography>
