@@ -14,6 +14,8 @@ export type Motorcycle = {
     year: string;
     engine: string;
     favorite: boolean;
+    image: string | undefined;
+
 
 }
 
