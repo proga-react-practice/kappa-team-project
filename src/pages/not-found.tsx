@@ -25,7 +25,7 @@ const NotFoundPage = () => {
                     <Typography >
                         {f.message}
                     </Typography>
-                    <Link to="/"><Button endIcon={<HomeIcon/>} variant="text" >Return To Home</Button></Link>
+                    <Link to="/"><Button endIcon={<HomeIcon/>} variant="text" >{f.btn_return}</Button></Link>
                 </Container>
             </Box>
     );
