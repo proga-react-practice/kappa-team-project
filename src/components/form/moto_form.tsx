@@ -1,11 +1,12 @@
 import { Motorcycle  } from '../../lib/types';
-import { Button, Stack, Typography, Alert, TextField, FormControlLabel, Radio, FormControl, FormLabel, Select, Paper, Card, RadioGroup, MenuItem } from '@mui/material';
+import { Button, Stack, Typography, Alert, TextField, FormControlLabel, Radio, FormControl, styled,FormLabel, Select, Paper, Card, RadioGroup, MenuItem ,Box} from '@mui/material';
 import ClearIcon from '@mui/icons-material/Clear';
 import InputLabel from '@mui/material/InputLabel';
 import { useContext, useEffect, } from 'react'; 
 import { useForm,  } from "react-hook-form";
 import {  makers } from '../../lib/constants';
 import { LocaleContext } from '../providers/localeProvider';
+import UploadIcon from '@mui/icons-material/Upload';
 
 const initialMotorcycleState: Motorcycle = {
   maker: '',
@@ -13,14 +14,29 @@ const initialMotorcycleState: Motorcycle = {
   year: '',
   engine: '',
   favorite: false,
+  image: ''
 };
 
 interface MotorcycleFormProps {
   addMotorcycle: (motorcycle: Motorcycle) => void;
 
 }
+
+
+const VisuallyHiddenInput = styled('input')({
+  clip: 'rect(0 0 0 0)',
+  clipPath: 'inset(50%)',
+  height: 1,
+  overflow: 'hidden',
+  position: 'absolute',
+  bottom: 0,
+  left: 0,
+  whiteSpace: 'nowrap',
+  width: 1,
+});
+
 export default function MotorcycleForm({ addMotorcycle }: MotorcycleFormProps) {
-  const {handleSubmit,  register,   reset,   formState: { errors },  watch, } = useForm<Motorcycle>({ defaultValues: initialMotorcycleState });
+  const {handleSubmit,  register,   reset,   formState: { errors },  watch, setValue} = useForm<Motorcycle>({ defaultValues: initialMotorcycleState });
   const { translation } = useContext(LocaleContext)
   const f = translation.form
   const m = translation.moto_form
@@ -28,7 +44,7 @@ export default function MotorcycleForm({ addMotorcycle }: MotorcycleFormProps) {
 
   const engineTypes = [f.petrol,f.diesel,f.electric] // Engine types
 
-  
+
   const onSubmit = (data: Motorcycle) => {
     addMotorcycle({ ...data });
     reset();
@@ -39,14 +55,45 @@ export default function MotorcycleForm({ addMotorcycle }: MotorcycleFormProps) {
   useEffect(() => {
     console.log(watch());
   }, [watch]);
-  
+
+
+
+  const uploadImage = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target === null) return
+    if (e.target.files === null) return
+    const img = e.target.files[0]
+    const reader = new FileReader()
+    reader.onload = (e) => {
+        setValue('image', e.target?.result as string)
+    }
+    reader.readAsDataURL(img)
+}
+
+  useEffect(() => {
+      register('image')
+  }, [register])
   return (
     <Card sx={{ overflowY: "auto", scrollbarColor: (theme) => `${theme.palette.primary.main} ${theme.palette.background.default}` }}>
       <Paper sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: 3 }}>
         <form onSubmit={handleSubmit(onSubmit)}>
           <Stack direction="column" spacing={2}>
             <Typography variant='h4' sx={{ margin: 1, padding: 1 }}>{m.title} </Typography>
-
+            <Box sx={{display: "flex", alignItems: "center"}}>
+                <Typography sx={{mr: 2}} variant='body1'>{f.upload_image}</Typography>
+                <Button
+                    component="label"
+                    role={undefined}
+                    variant="contained"
+                    tabIndex={-1}
+                    startIcon={<UploadIcon />}
+                    >
+                    Upload file
+                    <VisuallyHiddenInput 
+                        type="file" 
+                        accept='image/*' 
+                        onChange={uploadImage} />
+                </Button>
+            </Box>
             <FormControl>
               <InputLabel htmlFor="make" color="secondary">{f.maker}</InputLabel>
               <Select
