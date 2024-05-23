@@ -1,8 +1,13 @@
 import { Button, Typography, Box, Container } from "@mui/material";
 import HomeIcon from '@mui/icons-material/Home';
 import { Link } from "react-router-dom";
+import { useContext } from 'react';
+
+import { LocaleContext } from "../components/providers/localeProvider";
 
 const NotFoundPage = () => {
+    const { translation } = useContext(LocaleContext)
+    const f = translation.page_not_found
     return (
             <Box sx={{ 
                         padding: 5,
@@ -15,10 +20,10 @@ const NotFoundPage = () => {
                         alignItems: 'center'}}>
                 <Container sx={{ maxWidth: '80vw' }}>
                     <Typography color="text.primary" variant="h3" component="h3" >
-                        404 Page not found
+                        {f.title}
                     </Typography>
                     <Typography >
-                        Sorry, the page you are looking for could not be found or has been removed.
+                        {f.message}
                     </Typography>
                     <Link to="/"><Button endIcon={<HomeIcon/>} variant="text" >Return To Home</Button></Link>
                 </Container>

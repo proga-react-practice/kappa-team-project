@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import {
   Dialog,
   DialogTitle,
@@ -19,8 +19,9 @@ import {
   Container
 } from '@mui/material';
 import { Motorcycle } from '../../lib/types';
-import { engineTypes, makers } from '../../lib/constants';
+import {  makers } from '../../lib/constants';
 import { useForm } from 'react-hook-form';
+import { LocaleContext } from '../providers/localeProvider';
 
 interface MotoEditDialogProps {
   open: boolean;
@@ -31,36 +32,39 @@ interface MotoEditDialogProps {
 
 const MotoEditDialog: React.FC<MotoEditDialogProps> = ({ open, handleClose, motoData, saveChanges }) => {
   const { register, setValue, watch, handleSubmit,reset, formState: { errors } } = useForm<Motorcycle>();
-
+  const { translation } = useContext(LocaleContext)
+  const f = translation.form
+  const e = translation.error
+  const engineTypes = [f.petrol,f.diesel,f.electric]
   useEffect(() => {
     if (motoData) {
       reset(motoData);
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [motoData]);
 
   const handleSaveEdit = (data:Motorcycle) => {
       saveChanges(data); 
       handleClose();
   };
-console.log(watch("maker"))
   return (
     <Dialog open={open} onClose={handleClose} >
-      <DialogTitle>Edit Motorcycle</DialogTitle>
+      <DialogTitle>{f.editmoto}</DialogTitle>
       <DialogContent>
         <Container component="form" onSubmit={handleSubmit(handleSaveEdit)} id="moto-edit">
           <Stack direction="column" spacing={2} padding={2}>
             <FormControl sx={{ width: 300 }}>
-              <InputLabel color="secondary">Maker</InputLabel>
+              <InputLabel color="secondary">{f.maker}</InputLabel>
               <Select
                 defaultValue={""}
                 label="Make"
-                {...register('maker', { required: 'Make is required' })}
+                {...register('maker', { required: e.maker_error  })}
                 value={watch("maker")??""}
                 
                 color="secondary"
                 error={!!errors.maker}
               >
-                <MenuItem value="">Select Maker</MenuItem>
+                <MenuItem value=""> {f.select_maker}</MenuItem>
                 {makers.map((maker) => (
                   <MenuItem key={maker} value={maker}>
                     {maker}
@@ -70,27 +74,24 @@ console.log(watch("maker"))
               {errors.maker && <Alert severity="error">{errors.maker.message}</Alert>}
             </FormControl>
             <TextField
-              label="Model"
+              label={f.model}
               color="secondary"
-              {...register('model', { required: 'Model is required', minLength: { value: 1, message: 'Model must be at least 1 character long' }, maxLength: { value: 15, message: 'Model must be at most 15 characters long' } })}
+              {...register('model', { required: e.model_error , minLength: { value: 2, message: e.model_2ch_error }, maxLength: { value: 15, message: e.model_15ch_error } })}
+              error={errors.model !== undefined}
+              helperText={errors.model?.message?.toString() }
             />
-            {errors.model && <Alert severity="error">{errors.model.message}</Alert>}
             <TextField
               type="number"
-              label="Year"
               color="secondary"
-              {...register('year', {
-                required: 'Year is required',
-                min: { value: 1900, message: 'Year must be at least 1900' },
-                max: { value: 2024, message: 'Year must be at most 2024' }
-              })}
-              error={!!errors.year}
+              label={f.year}
+              {...register('year', {required: e.year_error , min: {value: 1900, message: e.year_error_1900}, max: {value: new Date().getFullYear(), message: `${e.year_less_error} ${new Date().getFullYear()}`}, pattern: {value: /^\d{4}$/, message: e.year_4num_error}})}
+              error={errors.year !== undefined}
               helperText={errors.year?.message}
               inputProps={{ min: 1900, max: 2024 }}
             />
             {errors.year && <Alert severity="error">{errors.year.message}</Alert>}
             <FormControl required component="fieldset">
-              <FormLabel color="secondary" component="legend">Engine Type</FormLabel>
+            <FormLabel color="secondary" component="legend">{f.engine_text}</FormLabel>
               <RadioGroup onChange={(e) => setValue("engine",e.target.value)}
                 row
                 aria-label="engine"
@@ -110,8 +111,8 @@ console.log(watch("maker"))
         </Container>
       </DialogContent>
       <DialogActions>
-        <Button onClick={handleClose}>Cancel</Button>
-        <Button type="submit" form="moto-edit">Save</Button>
+        <Button onClick={handleClose}>{f.cancel}</Button>
+        <Button type="submit" form="moto-edit">{f.save}</Button>
       </DialogActions>
     </Dialog>
   );

@@ -2,17 +2,13 @@ import React, {  } from 'react';
 import { Box, Container } from '@mui/material';
 import MotorcycleForm from '../components/form/moto_form';
 import MotorcycleList from '../components/list/moto_list';
-import { Motorcycle } from '../lib/types';
 
-import { useState } from 'react';
+import { useContext } from 'react';
+import { MotoContext } from '../components/providers/motoProvider';
 
 
 const MotoPage: React.FC = () => {
-  const [Motorcycles, setMotorcycles] = useState<Motorcycle[]>([]);
-
-  const addMotorcycle = (motorcycle: Motorcycle) => {
-    setMotorcycles([...Motorcycles, motorcycle]);
-  };
+  const {addMotorcycle} = useContext(MotoContext);
 
 
 
@@ -21,7 +17,7 @@ const MotoPage: React.FC = () => {
       <Container sx={{ display: 'flex', maxHeight: '80vh', flexDirection: { xs: 'column', md: 'row' }, justifyContent: 'center' }}>
         <MotorcycleForm addMotorcycle={addMotorcycle} />
         <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'end', padding: 2 }}>
-          <MotorcycleList motorcycles={Motorcycles} setMotorcycles={setMotorcycles}  />
+          <MotorcycleList />
         </Box>
       </Container>
 
