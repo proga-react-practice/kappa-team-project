@@ -18,7 +18,7 @@ export default function VehiclePage() {
     const t = translation.form
 
     const vehicle = cars[Number(id)] || Motorcycles[Number(id)-cars.length]
-    const motorcycle = Number(id) > cars.length
+    const motorcycle = Number(id) >= cars.length
 
     return (
         <Box sx={{ minHeight: '100vh', width: '100vw', alignItems: 'center', display: 'flex', flexDirection: 'column', gap: 2 }}>
