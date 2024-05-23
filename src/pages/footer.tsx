@@ -1,10 +1,10 @@
 import { useContext } from 'react';
 import { Avatar, Box, Stack, Typography, Link } from '@mui/material';
-import {
-  FaFacebookSquare as FacebookLogo,
-  FaTwitter as TwitterLogo,
-  FaInstagram as InstagramLogo,
-} from 'react-icons/fa';
+// import {
+//   FaFacebookSquare as FacebookLogo,
+//   FaTwitter as TwitterLogo,
+//   FaInstagram as InstagramLogo,
+// } from 'react-icons/fa';
 import { LocaleContext } from '../components/providers/localeProvider';
 
 const Footer = () => {
@@ -61,11 +61,11 @@ const Footer = () => {
     },
   ];
 
-  const iconLinks = [
-    { IconComponent: FacebookLogo, href: 'https://www.facebook.com/' },
-    { IconComponent: TwitterLogo, href: 'https://twitter.com/' },
-    { IconComponent: InstagramLogo, href: 'https://www.instagram.com/' }
-  ];
+  // const iconLinks = [
+  //   { IconComponent: FacebookLogo, href: 'https://www.facebook.com/' },
+  //   { IconComponent: TwitterLogo, href: 'https://twitter.com/' },
+  //   { IconComponent: InstagramLogo, href: 'https://www.instagram.com/' }
+  // ];
 
   return (
     <Stack sx={{
@@ -107,14 +107,14 @@ const Footer = () => {
         alignItems: 'flex-start',
         py: { xs: 3, md: '5px' },
       }}>
-        {iconLinks.map((item, index) => (
+        {/* {iconLinks.map((item, index) => (
           <Link key={index} href={item.href} target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none' }}>
             <Avatar
               component={item.IconComponent}
               sx={{ mx: 1, '&:hover': { fill: "gray" } }}
             />
           </Link>
-        ))}
+        ))} */}
       </Stack>
     </Stack>
   );

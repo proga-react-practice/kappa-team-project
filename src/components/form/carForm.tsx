@@ -37,8 +37,8 @@ export function FormFields({register, errors, watch, setValue} : FormFieldsProps
                 
                 helperText={errors.maker?.message?.toString()}>
                     <MenuItem value="">{f.select_maker}</MenuItem>
-                    {carMakers.map((maker) => (
-                        <MenuItem value={maker}>{maker}</MenuItem>
+                    {carMakers.map((maker, i) => (
+                        <MenuItem key={i} value={maker}>{maker}</MenuItem>
                     ))}
             </TextField>
             <TextField
@@ -47,6 +47,7 @@ export function FormFields({register, errors, watch, setValue} : FormFieldsProps
                 {...register('model', {required: e.model_error, minLength: {value: 5, message: e.model_5ch_error}})}
                 error={errors.model !== undefined}
                 helperText={errors.model?.message?.toString()}
+                required
                 fullWidth
             />
             <TextField
@@ -55,6 +56,7 @@ export function FormFields({register, errors, watch, setValue} : FormFieldsProps
                 {...register('year', {  required: e.year_error ,min: {value: 1900, message: e.year_error_1900}, max: {value: new Date().getFullYear(), message: `${e.year_less_error} ${new Date().getFullYear()}`}, pattern: {value: /^\d{4}$/, message: e.year_4num_error}})}
                 error={errors.year !== undefined}
                 helperText={errors.year?.message?.toString()}
+                required
                 fullWidth
             />
             <FormControl error={errors.engine !== undefined} required component="fieldset">
