@@ -78,11 +78,12 @@ export default function MotorcycleList() {
 
               </Box>
               <Stack direction={"row"}>
-
-              <Box component="img" src={motorcycle.image} alt={motorcycle.model} sx={{ paddingRight: 1, height: "100%", width: "50%", objectFit: "contain" }} />
+               {motorcycle.image && 
+                  <Box component="img" src={motorcycle.image} alt={motorcycle.model} sx={{ paddingRight: 1, height: "100%", width: "50%", objectFit: "contain" }} />}
 
 
                 <Box  >
+                
               <Typography variant="body1" sx={{ textAlign: 'left' }}>
                 <strong>{f.maker}:</strong> {motorcycle.maker}
               </Typography>
