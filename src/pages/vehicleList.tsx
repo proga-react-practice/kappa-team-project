@@ -1,14 +1,16 @@
 import { useContext } from "react"
 import { CarsContext } from "../components/providers/carsProvider"
 import { MotoContext } from "../components/providers/motoProvider";
-import { DataGrid, GridColDef } from '@mui/x-data-grid';
+import { DataGrid, GridActionsCellItem, GridColDef } from '@mui/x-data-grid';
 import { Box, Typography } from "@mui/material";
 import { engineTypes } from "../lib/types";
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import TwoWheeler from "@mui/icons-material/TwoWheeler";
 import DirectionsCarIcon from '@mui/icons-material/DirectionsCar';
+import LaunchIcon from '@mui/icons-material/Launch';
 import { LocaleContext } from "../components/providers/localeProvider";
+import { Link } from "react-router-dom";
 
 export function VehicleList() {
     const { cars } = useContext(CarsContext)
@@ -23,6 +25,16 @@ export function VehicleList() {
         { field: 'year', type: "number", headerName: f.year, width: 150 },
         { field: 'engine', headerName: f.engine, width: 150, type: 'singleSelect', valueOptions: engineTypes },
         { field: 'favorite', headerName: f.favorite, width: 150, type: 'boolean', renderCell: (params) => params.row.favorite ? <FavoriteIcon sx={{color: 'primary.main'}}/> : <FavoriteBorderIcon  sx={{color: 'primary.main'}}/>},
+        { field: 'open', headerName: f.open, type: "actions", width: 150,
+            getActions: (params) => [
+                <GridActionsCellItem
+                    icon={<Link to={"/vehicle/"+params.id}><LaunchIcon
+                    sx={{color: 'primary.main'}}/></Link>}
+                    label='favorite'
+                    onClick={() => console.log(params.row)}
+                />,
+            ]
+        }
     ]
 
     const rows = [

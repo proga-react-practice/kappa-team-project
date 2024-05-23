@@ -2,7 +2,6 @@ import CarForm from '../components/form/carForm'
 import { useState, useContext } from 'react'
 import CarList from '../components/list/carList'
 import CarEditDialog from '../components/dialog/carEditDialog'
-import CarHistory from '../components/dialog/carsHistory'
 import { Box, Container, Divider} from '@mui/material'
 import { CarsContext } from '../components/providers/carsProvider'
 
@@ -24,7 +23,7 @@ function CarsPage() {
 					<CarForm />
 					{cars.length !== 0 && <Divider orientation='vertical' flexItem variant='middle' sx={{m: 2}} />}
 					<Box sx={{display: 'flex', flexDirection: 'column', alignItems: 'end'}}>
-						<CarHistory />
+						
 						<CarList handleEdit={handleEdit} />
 					</Box>
 				</Container>
