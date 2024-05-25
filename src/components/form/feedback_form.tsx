@@ -73,7 +73,7 @@ const FeedbackForm = () => {
             size="large"
             name="simple-controlled"
             value={value}
-            onChange={(event, newValue) => {
+            onChange={(_, newValue) => {
               setValue(newValue);
             }}
             sx={{ marginY: 2 }}

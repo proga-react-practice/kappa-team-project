@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { Avatar, Box, Stack, Typography, Link } from '@mui/material';
+import { Box, Stack, Typography, Link } from '@mui/material';
 // import {
 //   FaFacebookSquare as FacebookLogo,
 //   FaTwitter as TwitterLogo,
