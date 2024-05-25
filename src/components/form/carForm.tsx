@@ -28,7 +28,7 @@ const VisuallyHiddenInput = styled('input')({
     width: 1,
   });
 
-export const emptyCar: Car = { maker: undefined, model: undefined, year: undefined, engine: undefined, favorite: false, image: undefined}
+const emptyCar: Car = { maker: undefined, model: undefined, year: undefined, engine: undefined, favorite: false, image: undefined}
 
 export function FormFields({register, errors, watch, setValue} : FormFieldsProps) {
     const { translation } = useContext(LocaleContext)

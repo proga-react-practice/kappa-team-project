@@ -36,10 +36,11 @@ export default function LocaleProvider({ children, locales, translations }: Loca
 
     useEffect(() => {
         setLocale(locales[localeIndex])
-    }, [localeIndex])
+    }, [localeIndex, locales])
 
     useEffect(() => {
         setTranslation(translations[locale])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [locale])
 
     function changeLocale() {
