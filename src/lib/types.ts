@@ -9,9 +9,9 @@ export type Car = { // Car object fields
 }
 
 export type Motorcycle = {
-    maker: string;
-    model: string;
-    year: string;
+    maker: string| undefined;
+    model: string| undefined;
+    year: string| undefined;
     engine: number | undefined;
     favorite: boolean;
     image: string | undefined;

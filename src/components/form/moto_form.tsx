@@ -1,5 +1,5 @@
 import { Motorcycle  } from '../../lib/types';
-import { Button, Stack, Typography, Alert, TextField, FormControlLabel, Radio, FormControl, styled,FormLabel, Select, Paper, Card, RadioGroup, MenuItem ,Box} from '@mui/material';
+import { Button, Stack, Typography, Alert, TextField, FormControlLabel, Radio, FormControl, styled,FormLabel, Select,  Card, RadioGroup, MenuItem ,Box} from '@mui/material';
 import ClearIcon from '@mui/icons-material/Clear';
 import InputLabel from '@mui/material/InputLabel';
 import { useContext, useEffect, } from 'react'; 
@@ -10,8 +10,8 @@ import UploadIcon from '@mui/icons-material/Upload';
 
 const initialMotorcycleState: Motorcycle = {
   maker: '',
-  model: '',
-  year: '',
+  model: '1999',
+  year: 1999,
   engine: undefined,
   favorite: false,
   image: ''
@@ -74,7 +74,7 @@ export default function MotorcycleForm({ addMotorcycle }: MotorcycleFormProps) {
   }, [register])
   return (
     <Card sx={{ overflowY: "auto", scrollbarColor: (theme) => `${theme.palette.primary.main} ${theme.palette.background.default}` }}>
-      <Paper sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: 3 }}>
+      <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: 3 }}>
         <form onSubmit={handleSubmit(onSubmit)}>
           <Stack direction="column" spacing={2}>
             <Typography variant='h4' sx={{ margin: 1, padding: 1 }}>{m.title} </Typography>
@@ -165,7 +165,7 @@ export default function MotorcycleForm({ addMotorcycle }: MotorcycleFormProps) {
             </Stack>
           </Stack>
         </form>
-      </Paper>
+      </Box>
     </Card>
   );
 }

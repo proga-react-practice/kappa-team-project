@@ -12,6 +12,7 @@ import LocaleProvider from "./components/providers/localeProvider"
 import FeedbackForm from './components/form/feedback_form'
 import ComingSoonPage from './pages/coming_soon'
 import VehiclePage from './pages/vehiclePage'
+import Custom from './pages/сustom'
 
 
 function App() {
@@ -29,6 +30,8 @@ function App() {
 						<Route path="feedback" element={<FeedbackForm/>} />
 						<Route path="coomingsoon" element={<ComingSoonPage/>} />
 						<Route path="vehicle/:id" element={<VehiclePage/>}/>
+						<Route path="vehicles" element={<Custom/>}/>
+
 					</Route>
 				</Routes>
 			</BrowserRouter>
