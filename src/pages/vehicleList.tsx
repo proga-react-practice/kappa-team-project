@@ -3,7 +3,6 @@ import { CarsContext } from "../components/providers/carsProvider"
 import { MotoContext } from "../components/providers/motoProvider";
 import { DataGrid, GridActionsCellItem, GridColDef } from '@mui/x-data-grid';
 import { Box, Typography } from "@mui/material";
-import { engineTypes } from "../lib/types";
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import TwoWheeler from "@mui/icons-material/TwoWheeler";
@@ -17,13 +16,14 @@ export function VehicleList() {
     const { Motorcycles } = useContext(MotoContext)
     const { translation } = useContext(LocaleContext)
     const f = translation.form
+    const engineTypes = [f.petrol,f.diesel,f.electric]
 
     const columns: GridColDef[] = [
         { field: 'type', headerName: f.type, width: 50, renderCell: (params) => params.row.type === "Car" ? <DirectionsCarIcon sx={{color: 'primary.main', mb: -0.5}}/> : <TwoWheeler  sx={{color: 'primary.main', mb: -1}}/>},
         { field: 'model', headerName: f.model, width: 150 },
         { field: 'maker', headerName: f.maker, width: 150 },
         { field: 'year', type: "number", headerName: f.year, width: 150 },
-        { field: 'engine', headerName: f.engine, width: 150, type: 'singleSelect', valueOptions: engineTypes },
+        { field: 'engine', headerName: f.engine, width: 150, type: 'singleSelect', renderCell: (params) => params.row.engine && engineTypes[params.row.engine] },
         { field: 'favorite', headerName: f.favorite, width: 150, type: 'boolean', renderCell: (params) => params.row.favorite ? <FavoriteIcon sx={{color: 'primary.main'}}/> : <FavoriteBorderIcon  sx={{color: 'primary.main'}}/>},
         { field: 'open', headerName: f.open, type: "actions", width: 150,
             getActions: (params) => [

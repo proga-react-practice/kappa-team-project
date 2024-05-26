@@ -87,29 +87,27 @@ export function FormFields({register, errors, watch, setValue} : FormFieldsProps
             </TextField>
             <TextField
                 sx={{marginY: 1}}
-                label={f.model}
+                label={f.model + "*"}
                 {...register('model', {required: e.model_error, minLength: {value: 5, message: e.model_5ch_error}})}
                 error={errors.model !== undefined}
                 helperText={errors.model?.message?.toString()}
-                required
                 fullWidth
             />
             <TextField
                 sx={{marginY: 1}}
-                label={f.year}
+                label={f.year + "*"}
                 {...register('year', {  required: e.year_error ,min: {value: 1900, message: e.year_error_1900}, max: {value: new Date().getFullYear(), message: `${e.year_less_error} ${new Date().getFullYear()}`}, pattern: {value: /^\d{4}$/, message: e.year_4num_error}})}
                 error={errors.year !== undefined}
                 helperText={errors.year?.message?.toString()}
-                required
                 fullWidth
             />
-            <FormControl error={errors.engine !== undefined} required component="fieldset">
-                <FormLabel component="legend">{f.engine_text}</FormLabel>
+            <FormControl error={errors.engine !== undefined} component="fieldset">
+                <FormLabel component="legend">{f.engine_text + "*"}</FormLabel>
                 <RadioGroup 
                     row
                     value={watch('engine') || ''}
                     aria-label="engine">
-                    {engineTypes.map((engine) => (<FormControlLabel value={engine} {...register('engine', {required: e.e})} control={<Radio />} label={engine} />))}
+                    {engineTypes.map((engine, index) => (<FormControlLabel value={index} {...register('engine', {required: e.engine_error})} control={<Radio />} label={engine} />))}
                 </RadioGroup>
                 <FormHelperText>{errors.engine?.message?.toString()}</FormHelperText>
             </FormControl>

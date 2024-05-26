@@ -22,6 +22,8 @@ export default function MotorcycleList() {
   const { translation } = useContext(LocaleContext)
   const f = translation.form
 
+  const engineTypes = [f.petrol,f.diesel,f.electric]
+
   const dragItem = React.useRef<number | null>(null);
   const dragOverItem = React.useRef<number | null>(null);
 
@@ -94,7 +96,7 @@ export default function MotorcycleList() {
                 <strong>{f.year}:</strong> {motorcycle.year}
               </Typography>
               <Typography variant="body1" sx={{ textAlign: 'left' }}>
-              <strong>{f.engine}:</strong> {motorcycle.engine}
+              <strong>{f.engine}:</strong> {motorcycle.engine && engineTypes[motorcycle.engine]}
               </Typography></Box></Stack>
             </CardContent>
           </Card>

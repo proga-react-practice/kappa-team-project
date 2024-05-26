@@ -92,15 +92,15 @@ const MotoEditDialog: React.FC<MotoEditDialogProps> = ({ open, handleClose, moto
             {errors.year && <Alert severity="error">{errors.year.message}</Alert>}
             <FormControl required component="fieldset">
             <FormLabel color="secondary" component="legend">{f.engine_text}</FormLabel>
-              <RadioGroup onChange={(e) => setValue("engine",e.target.value)}
+              <RadioGroup onChange={(e) => setValue("engine",parseInt(e.target.value))}
                 row
                 aria-label="engine"
                 value={watch("engine")??""}
               > 
-                {engineTypes.map((engine) => (
+                {engineTypes.map((engine, index) => (
                   <FormControlLabel
-                    key={engine}
-                    value={engine}
+                    key={index}
+                    value={index}
                     control={<Radio />}
                     label={engine}
                   />

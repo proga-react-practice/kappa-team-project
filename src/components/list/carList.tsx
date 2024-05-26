@@ -22,6 +22,7 @@ export default function CarList({ handleEdit }: CarListProps) {
     const { cars, deleteCar, moveCar, toggleFavoriteCar } = useContext(CarsContext)
     const { translation } = useContext(LocaleContext)
     const f = translation.form
+    const engineTypes = [f.petrol,f.diesel,f.electric]
 
     useEffect(() => {
         setDroppableId('car-list')
@@ -105,7 +106,7 @@ export default function CarList({ handleEdit }: CarListProps) {
                                                             <Typography><b>{f.maker}: </b>{car.maker}</Typography>
                                                             <Typography><b>{f.model}: </b> {car.model}</Typography>
                                                             <Typography><b>{f.year}: </b> {car.year}</Typography>
-                                                            <Typography><b>{f.engine}: </b> {car.engine}</Typography>
+                                                            <Typography><b>{f.engine}: </b> {car.engine && engineTypes[car.engine]}</Typography>
                                                         </Container>
                                                         <ButtonGroup orientation='vertical'>
                                                             <IconButton color='error' onClick={() => {toggleFavoriteCar(i)}}>{car.favorite ? <FavoriteIcon/> : <FavoriteBorderIcon/>}</IconButton>

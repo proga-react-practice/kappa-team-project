@@ -12,7 +12,7 @@ const initialMotorcycleState: Motorcycle = {
   maker: '',
   model: '',
   year: '',
-  engine: '',
+  engine: undefined,
   favorite: false,
   image: ''
 };
@@ -136,14 +136,13 @@ export default function MotorcycleForm({ addMotorcycle }: MotorcycleFormProps) {
 
             <FormControl required component="fieldset">
               <FormLabel color="secondary" component="legend">{f.engine_text}</FormLabel>
-              <RadioGroup row aria-label="engine">
+              <RadioGroup row value={watch('engine') || ''} aria-label="engine">
                 
-              {engineTypes.map((engine) => (
+              {engineTypes.map((engine, index) => (
                 <FormControlLabel
-                  key={engine}
-                  checked={engine === watch('engine')}
+                  key={index}
                   {...register('engine', { required: e.engine_error })}
-                  value={engine}
+                  value={index}
                   control={<Radio />}
                   label={engine}
 
