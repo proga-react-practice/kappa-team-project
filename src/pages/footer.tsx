@@ -1,5 +1,6 @@
 import { useContext } from 'react';
 import { Box, Stack, Typography, Link } from '@mui/material';
+import { Link as Href } from 'react-router-dom';
 // import {
 //   FaFacebookSquare as FacebookLogo,
 //   FaTwitter as TwitterLogo,
@@ -93,9 +94,13 @@ const Footer = () => {
             </Typography>
             {item.bodyText.map((link, linkIndex) => (
               <Typography key={linkIndex} variant="body2" >
-                <Link href={link.path} color="inherit" underline="none">
-                  {link.text}
-                </Link>
+                
+                  <Href style={{textDecoration: "none"}} to={link.path}>
+                    <Link color="text.secondary" underline="none">
+                      {link.text}
+                    </Link>
+                  </Href>
+                
               </Typography>
             ))}
           </Box>
