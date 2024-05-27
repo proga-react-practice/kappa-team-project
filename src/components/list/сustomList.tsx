@@ -16,19 +16,36 @@ import {
     RadioGroup,
     FormControlLabel,
     Radio,
-    Divider
+    Divider,
+    TextField,
+    MenuItem,
+    InputAdornment
 } from "@mui/material";
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { styled } from '@mui/system';
-import { useSearchParams } from 'react-router-dom';
-import { MotoContext } from "../components/providers/motoProvider";
-import { CarsContext } from "../components/providers/carsProvider";
-import { LocaleContext } from "../components/providers/localeProvider";
+import { Link, useSearchParams } from 'react-router-dom';
+import { MotoContext } from "../providers/motoProvider";
+import { CarsContext } from "../providers/carsProvider";
+import { LocaleContext } from "../providers/localeProvider";
+import { carMakers, motoMakers } from "../../lib/constants";
+import ImageNotSupportedIcon from '@mui/icons-material/ImageNotSupported';
+import SearchIcon from '@mui/icons-material/Search';
+import LaunchIcon from '@mui/icons-material/Launch';
+import { Car, Motorcycle } from "../../lib/types";
+
+function onlyUnique(value : any, index : number, array : any[]) {
+    return array.indexOf(value) === index;
+}
+
+interface Vehicle extends Car, Motorcycle{
+    id: number;
+    type: string;
+}
 
 interface VehicleCardProps {
-    vehicle: any;
+    vehicle: Vehicle;
     engineTypes: string[];
     toggleFavorite: (id: number) => void;
 }
@@ -36,6 +53,7 @@ interface VehicleCardProps {
 const VehicleCard: React.FC<VehicleCardProps> = ({ vehicle, engineTypes, toggleFavorite }) => {
     return (
         <Card>
+            { vehicle.image ?
             <CardMedia
                 component="img"
                 alt={vehicle.model}
@@ -43,6 +61,11 @@ const VehicleCard: React.FC<VehicleCardProps> = ({ vehicle, engineTypes, toggleF
                 image={vehicle.image}
                 title={vehicle.model}
             />
+            : 
+            <Box sx={{ height: 140, backgroundColor: 'background.default', display: "flex", alignItems: "center", justifyItems: "center" }}>
+                <ImageNotSupportedIcon sx={{ fontSize: 60, m: 'auto', color: "secondary.main" }} />
+            </Box>
+            }
             <CardContent>
                 <Typography variant="h5" component="div">
                     {vehicle.model}
@@ -58,6 +81,9 @@ const VehicleCard: React.FC<VehicleCardProps> = ({ vehicle, engineTypes, toggleF
                     <IconButton color='error' onClick={() => toggleFavorite(vehicle.id)}>
                         {vehicle.favorite ? <FavoriteIcon /> : <FavoriteBorderIcon />}
                     </IconButton>
+                    <Link to={"/vehicle/"+vehicle.id}>
+                        <LaunchIcon sx={{color: 'primary.main'}}/>
+                    </Link>
                 </Box>
             </CardContent>
         </Card>
@@ -84,7 +110,7 @@ const Content = styled(Box)(({ theme }) => ({
     maxHeight: 'calc(100vh - 64px)',
 }));
 
-const Custom: React.FC = () => {
+const CustomList: React.FC = () => {
     const { cars, toggleFavoriteCar } = useContext(CarsContext) || { cars: [] };
     const { translation } = useContext(LocaleContext);
     const { form: { vehicle_list } } = translation;
@@ -95,8 +121,11 @@ const Custom: React.FC = () => {
 
     const [searchParams, setSearchParams] = useSearchParams();
     const [typeFilter, setTypeFilter] = useState(searchParams.get("type") || "");
-    const [yearFilter, setYearFilter] = useState(searchParams.get("year") || "");
+    const [yearFromFilter, setYearFromFilter] = useState(searchParams.get("yearFrom") || "");
+    const [yearToFilter, setYearToFilter] = useState(searchParams.get("yearTo") || "");
     const [engineFilter, setEngineFilter] = useState(searchParams.get("engine") || "");
+    const [makerFilter, setMakerFilter] = useState(searchParams.get("maker") || "");
+    const [searchQuery, setSearhQuery] = useState("")
 
     const handleFilterChange = (filter: string, value: string) => {
         if (value) {
@@ -109,8 +138,10 @@ const Custom: React.FC = () => {
 
     useEffect(() => {
         setTypeFilter(searchParams.get("type") || "");
-        setYearFilter(searchParams.get("year") || "");
+        setYearFromFilter(searchParams.get("yearFrom") || "");
+        setYearToFilter(searchParams.get("yearTo") || "");
         setEngineFilter(searchParams.get("engine") || "");
+        setMakerFilter(searchParams.get("maker") || "");
     }, [searchParams]);
 
     const rows = [
@@ -119,13 +150,15 @@ const Custom: React.FC = () => {
     ].sort((a, b) => a.favorite === b.favorite ? 0 : a.favorite ? -1 : 1)
       .filter(vehicle => 
           (typeFilter ? vehicle.type === typeFilter : true) &&
-          (yearFilter ? vehicle.year === parseInt(yearFilter) : true) &&
-          (engineFilter ? vehicle.engine !== undefined && vehicle.engine.toString() === engineFilter : true)
+          (yearFromFilter && vehicle.year ? vehicle.year >= parseInt(yearFromFilter) : true) &&
+          (yearToFilter && vehicle.year ? vehicle.year < parseInt(yearToFilter) : true) &&
+          (engineFilter ? vehicle.engine !== undefined && vehicle.engine.toString() === engineFilter : true) &&
+          (makerFilter ? vehicle.maker === makerFilter : true) && 
+          (vehicle.model && searchQuery ? vehicle.model.includes(searchQuery) : true)
       );
-    console.log(rows)
 
     return (
-        <Box sx={{ height: '100vh', width: '100vw', overflowY: 'auto', paddingBottom: 2 }}>
+        <>
             <Box sx={{ paddingTop: 3, paddingLeft: 1 }}>
                 <Typography variant='h4' align='left' sx={{ mt: 2, typography: { xs: 'h4', md: 'h3' } }} color="primary.main">{vehicle_list}</Typography>
                 <Divider sx={{ width: { xs: '0%', md: "100%" } }} />
@@ -174,8 +207,66 @@ const Custom: React.FC = () => {
                             </FormControl>
                         </AccordionDetails>
                     </Accordion>
+
+                    <Accordion>
+                        <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                            <Typography>Year</Typography>
+                        </AccordionSummary>
+                        <AccordionDetails sx={{display: "flex", alignItems: "center", gap: 2}}>
+                            <TextField 
+                                label='From'
+                                variant='outlined'
+                                value={yearFromFilter}
+                                onChange={(e) => handleFilterChange("yearFrom", e.target.value)}
+                            />
+                             - 
+                            <TextField 
+                                label='To'
+                                variant='outlined'
+                                value={yearToFilter}
+                                onChange={(e) => handleFilterChange("yearTo", e.target.value)}
+                            />
+                        </AccordionDetails>
+                    </Accordion>
+
+                    <Accordion>
+                        <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                            <Typography>Maker</Typography>
+                        </AccordionSummary>
+                        <AccordionDetails>
+                            <TextField 
+                                label='Maker'
+                                variant='outlined'
+                                select
+                                value={makerFilter}
+                                fullWidth
+                                onChange={(e) => handleFilterChange("maker", e.target.value)}
+                            >
+                                <MenuItem value="">All</MenuItem>
+                                {carMakers.concat(motoMakers).filter(onlyUnique).map((maker, i) => (
+                                    <MenuItem key={i} value={maker}>{maker}</MenuItem>
+                                ))}
+                            </TextField>
+                        </AccordionDetails>
+                    </Accordion>
                 </Sidebar>
                 <Content>
+                    { (cars.length > 0 || Motorcycles.length > 0) &&
+                        <TextField 
+                            label={f.search} 
+                            variant='outlined' 
+                            sx={{width: '100%', marginY: 1}}
+                            value={searchQuery}
+                            onChange={(e) => {setSearhQuery(e.target.value)}}
+                            InputProps={{
+                                startAdornment: (
+                                <InputAdornment position="end">
+                                    <SearchIcon />
+                                </InputAdornment>
+                                ),
+                            }}
+                        />
+                    }
                     <Grid container spacing={2}>
                         {rows.map((vehicle, index) => (
                             <Grid item xs={12} sm={6} md={4} lg={3} key={index} sx={{ paddingRight: { xs: 3, md: 0 }, paddingBottom: { xs: 0, md: 0 } }}>
@@ -189,8 +280,8 @@ const Custom: React.FC = () => {
                     </Grid>
                 </Content>
             </Box>
-        </Box>
+        </>
     );
 };
 
-export default Custom;
+export default CustomList;

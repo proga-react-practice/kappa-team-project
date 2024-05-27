@@ -1,4 +1,4 @@
-import { IconButton, ThemeProvider, Button, Divider, AppBar, Toolbar, Box,Menu,MenuList,MenuItem } from "@mui/material"
+import { IconButton, ThemeProvider, Button, Divider, Toolbar, Box,Menu,MenuList,MenuItem } from "@mui/material"
 import HomeIcon from '@mui/icons-material/Home';
 import DirectionsCarIcon from '@mui/icons-material/DirectionsCar';
 import TwoWheelerIcon from '@mui/icons-material/TwoWheeler';
@@ -37,17 +37,15 @@ export default function Layout() {
 
     return (
         <ThemeProvider theme={themes[themeIndex].theme}>
-            <AppBar sx ={{bgcolor: "background.default",} }>
-                <Toolbar sx={{height: 'auto', width: 'auto', margin: 0, overflowY:"auto" , justifyContent: "start", gap: 10,  display:{xs:'none', md:'flex'}}}>
+                <Toolbar sx={{height: 'auto', width: 'auto', margin: 0, overflowY:"auto" , justifyContent: "start", gap: 10, backgroundColor: "background.default",  display:{xs:'none', md:'flex'}}}>
                     <Link to="/"><IconButton sx={{color: 'primary.main'}}><HomeIcon/></IconButton></Link>
-                    <Link to="cars"><Button startIcon={<DirectionsCarIcon/>} sx={{color: 'primary.main'}} href="vlad">{t.cars}</Button></Link>
-                    <Link to="moto"><Button startIcon={<TwoWheelerIcon/>} sx={{color: 'primary.main'}} href="ira">{t.moto}</Button></Link>
-                    <Link to="list"><Button startIcon={<ListIcon/>} sx={{color: 'primary.main'}} href="ira">{t.list}</Button></Link>
-                    <Link to="vehicles"><Button startIcon={<ListIcon/>} sx={{color: 'primary.main'}} href="ira">{t.list}</Button></Link>
+                    <Link to="cars"><Button startIcon={<DirectionsCarIcon/>} sx={{color: 'primary.main'}}>{t.cars}</Button></Link>
+                    <Link to="moto"><Button startIcon={<TwoWheelerIcon/>} sx={{color: 'primary.main'}}>{t.moto}</Button></Link>
+                    <Link to="vehicles"><Button startIcon={<ListIcon/>} sx={{color: 'primary.main'}}>{t.list}</Button></Link>
                     <Button sx={{color: 'primary.main', marginLeft: "auto"}} onClick={changeLocale}>{t.lang_name}</Button>
                     <IconButton sx={{color: 'primary.main'}} onClick={changeTheme}>{themes[themeIndex].icon}</IconButton>
                 </Toolbar>
-                <Box sx= {{display:{xs:'flex', md:'none'}, padding:3,  }}>
+                <Box sx= {{display:{xs:'flex', md:'none'}, padding:3, backgroundColor: "background.default"  }}>
                     <IconButton edge="start" sx={{color: 'primary.main'}} onClick={handleOpenNavMenu}>
                         <MenuIcon></MenuIcon>
                     </IconButton>
@@ -56,21 +54,22 @@ export default function Layout() {
                             <MenuItem ><Link to="/"><IconButton size="large" sx={{color: 'primary.main'}}><HomeIcon/></IconButton></Link></MenuItem>
                             <MenuItem ><Link to="cars"><Button size="medium" startIcon={<DirectionsCarIcon />} sx={{color: 'primary.main'}} href="vlad"></Button></Link></MenuItem>
                             <MenuItem ><Link to="moto"><Button size="medium" startIcon={<TwoWheelerIcon/>} sx={{color: 'primary.main'}} href="ira"></Button></Link></MenuItem>
-                            <MenuItem>                    <Link to="list"><Button startIcon={<ListIcon/>} sx={{color: 'primary.main'}} href="ira"></Button></Link></MenuItem>
+                            <MenuItem>                    <Link to="vehicles"><Button startIcon={<ListIcon/>} sx={{color: 'primary.main'}} href="ira"></Button></Link></MenuItem>
                         </MenuList>
 
                     </Menu>
-                    <Button sx={{color: 'primary.main'}} onClick={changeLocale}>{t.lang_name}</Button>
+                    <Button sx={{color: 'primary.main', ml: "auto"}} onClick={changeLocale}>{t.lang_name}</Button>
                     <IconButton sx={{color: 'primary.main'}} onClick={changeTheme}>{themes[themeIndex].icon}</IconButton>
 
                 </Box>
                 <Divider />
-                <CarsProvider>
+            <CarsProvider>
                     <MotoProvider>
-                        <Outlet />
+                        <Box sx={{overflowY: "auto", minHeight: "100vh", minWidth: "100vw", m: 0, p: 0, bgcolor: 'background.default'}}>{/* overflowY: "auto" */}
+                            <Outlet />
+                        </Box>
                     </MotoProvider>
                 </CarsProvider>
-            </AppBar>
         </ThemeProvider>
     )
 }

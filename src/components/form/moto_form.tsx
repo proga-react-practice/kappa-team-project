@@ -4,7 +4,7 @@ import ClearIcon from '@mui/icons-material/Clear';
 import InputLabel from '@mui/material/InputLabel';
 import { useContext, useEffect, } from 'react'; 
 import { useForm,  } from "react-hook-form";
-import {  makers } from '../../lib/constants';
+import {  motoMakers } from '../../lib/constants';
 import { LocaleContext } from '../providers/localeProvider';
 import UploadIcon from '@mui/icons-material/Upload';
 
@@ -106,7 +106,7 @@ export default function MotorcycleForm({ addMotorcycle }: MotorcycleFormProps) {
                 color="secondary"
               >
               <MenuItem value="">{f.select_maker}</MenuItem>
-                {makers.map((maker) => (
+                {motoMakers.map((maker) => (
                   <MenuItem key={maker} value={maker} {...register('maker', { required: e.maker_error  })} >
                     {maker}
                   </MenuItem>
