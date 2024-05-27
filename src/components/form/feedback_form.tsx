@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 
 import { TextField, Button, Container, Box, Rating ,Card} from '@mui/material';
-import Image from '../../images/image_processing20210817-11522-117f9o.gif';
+import image_scr from '../../images/image_processing20210817-11522-117f9o.gif';
 import { useForm } from 'react-hook-form';
 import { LocaleContext } from '../providers/localeProvider';
 
@@ -19,15 +19,16 @@ const FeedbackForm = () => {
 
       <Container maxWidth="sm" sx={{ display: 'flex', alignItems: 'center', flexDirection: { xs: "column", md: "row" } }}>
         <Box sx={{ width: { xs: "50%", md: "80%" }, height: { xs: "50%", md: "90%" } }}>
-          <img
-            src={Image}
+        <Box component="img"
+         src={image_scr}
             alt="presentation"
             style={{
               height: '100%',
               width: '100%',
-              padding: "3px"
-            }}
-          />
+              padding: "3"
+            }} />
+
+          
         </Box>
 
         <Container component="form" onSubmit={handleSubmit(onSubmit)} sx={{ display: 'flex', flexDirection: 'column', width: { xs: '100%', md: '80%' },height: { xs: "50%", md: "90%" } , marginTop: { xs: 2, md: 0 } , overflowY: "auto",}}>
