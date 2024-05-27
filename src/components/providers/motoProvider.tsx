@@ -3,8 +3,8 @@ import { Motorcycle } from '../../lib/types'
 
 interface MotoContextProps {
     Motorcycles: Motorcycle[],
-    setMotorcycles: (cars: Motorcycle[]) => void,
-    addMotorcycle: (cars: Motorcycle) => void,
+    setMotorcycles: (motos: Motorcycle[]) => void,
+    addMotorcycle: (motos: Motorcycle) => void,
     deleteMotorcycle: (index: number) => void,
     favoriteMotorcycle: (index: number) => void,
     saveChanges: (editedMoto: Motorcycle, editIndex: number) => void
