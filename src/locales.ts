@@ -32,7 +32,7 @@ export const translations : Translations = {
             type: "Type",
             favorite: "Favorite",
             vehicle_list: "Vehicle List",
-            upload_image: "Upload Image:",
+            upload_image: "Upload Image",
             open: "Open"
         },
         error: {
@@ -128,7 +128,7 @@ export const translations : Translations = {
             type: "Тип",
             favorite: "Улюблене",
             vehicle_list: "Список транспортних засобів",
-            upload_image: "Завантажити зображення:",
+            upload_image: "Завантажити зображення",
             open: "Відкрити"
         },
         error: {

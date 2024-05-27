@@ -74,7 +74,8 @@ const Footer = () => {
       py: 6,
       px: 5,
       textAlign: { xs: 'center', md: 'left' },
-      padding: 10
+      padding: 10,
+      color: 'text.secondary',
     }}>
       <Box>
         <Typography variant="h6">CollecTion</Typography>

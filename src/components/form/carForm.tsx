@@ -1,8 +1,9 @@
-import { Car, carMakers } from '../../lib/types'
+import { Car } from '../../lib/types'
+import { carMakers } from '../../lib/constants'
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import TextField from '@mui/material/TextField';
-import { Box, Button, ButtonGroup, FormControl, FormControlLabel, FormHelperText, FormLabel, MenuItem, Radio, RadioGroup, styled, Typography } from '@mui/material';
+import { Box, Button, ButtonGroup, FormControl, FormControlLabel, FormHelperText, FormLabel, MenuItem, Radio, RadioGroup, Typography } from '@mui/material';
 import { useForm, SubmitHandler, FieldErrors, UseFormRegister, UseFormWatch, UseFormSetValue } from "react-hook-form";
 import { useContext, useEffect } from 'react';
 import { CarsContext } from '../providers/carsProvider';
@@ -15,18 +16,6 @@ interface FormFieldsProps {
     watch: UseFormWatch<Car>
     setValue: UseFormSetValue<Car>
 }
-
-const VisuallyHiddenInput = styled('input')({
-    clip: 'rect(0 0 0 0)',
-    clipPath: 'inset(50%)',
-    height: 1,
-    overflow: 'hidden',
-    position: 'absolute',
-    bottom: 0,
-    left: 0,
-    whiteSpace: 'nowrap',
-    width: 1,
-  });
 
 const emptyCar: Car = { maker: undefined, model: undefined, year: undefined, engine: undefined, favorite: false, image: undefined}
 
@@ -54,7 +43,6 @@ export function FormFields({register, errors, watch, setValue} : FormFieldsProps
     return (
         <>
             <Box sx={{display: "flex", alignItems: "center"}}>
-                <Typography sx={{mr: 2}} variant='body1'>{f.upload_image}</Typography>
                 <Button
                     component="label"
                     role={undefined}
@@ -62,11 +50,22 @@ export function FormFields({register, errors, watch, setValue} : FormFieldsProps
                     tabIndex={-1}
                     startIcon={<UploadIcon />}
                     >
-                    Upload file
-                    <VisuallyHiddenInput 
+                    {f.upload_image}
+                    <input
                         type="file" 
                         accept='image/*' 
-                        onChange={uploadImage} />
+                        onChange={uploadImage}
+                        style={{
+                            clip: 'rect(0 0 0 0)',
+                            clipPath: 'inset(50%)',
+                            height: 1,
+                            overflow: 'hidden',
+                            position: 'absolute',
+                            bottom: 0,
+                            left: 0,
+                            whiteSpace: 'nowrap',
+                            width: 1,
+                          }} />
                 </Button>
             </Box>
             <TextField

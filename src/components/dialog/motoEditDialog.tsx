@@ -19,7 +19,7 @@ import {
   Container
 } from '@mui/material';
 import { Motorcycle } from '../../lib/types';
-import {  makers } from '../../lib/constants';
+import {  motoMakers } from '../../lib/constants';
 import { useForm } from 'react-hook-form';
 import { LocaleContext } from '../providers/localeProvider';
 
@@ -65,7 +65,7 @@ const MotoEditDialog: React.FC<MotoEditDialogProps> = ({ open, handleClose, moto
                 error={!!errors.maker}
               >
                 <MenuItem value=""> {f.select_maker}</MenuItem>
-                {makers.map((maker) => (
+                {motoMakers.map((maker) => (
                   <MenuItem key={maker} value={maker}>
                     {maker}
                   </MenuItem>

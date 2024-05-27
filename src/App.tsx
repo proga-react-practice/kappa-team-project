@@ -6,13 +6,12 @@ import MotoPage from './pages/moto'
 import NotFoundPage from './pages/not-found'
 
 import './App.css'
-import { VehicleList } from './pages/vehicleList'
 import { locales, translations } from "./locales"
 import LocaleProvider from "./components/providers/localeProvider"
 import FeedbackForm from './components/form/feedback_form'
 import ComingSoonPage from './pages/coming_soon'
 import VehiclePage from './pages/vehiclePage'
-import Custom from './pages/сustom'
+import ListPage from './pages/list'
 import './App.css';
 
 function App() {
@@ -26,11 +25,10 @@ function App() {
 						<Route path="cars" element={<CarsPage />} />
 						<Route path="moto" element={<MotoPage />} />
 						<Route path="*" element={<NotFoundPage />} />
-						<Route path="list" element={<VehicleList />} />
 						<Route path="feedback" element={<FeedbackForm/>} />
 						<Route path="coomingsoon" element={<ComingSoonPage/>} />
 						<Route path="vehicle/:id" element={<VehiclePage/>}/>
-						<Route path="vehicles" element={<Custom/>}/>
+						<Route path="vehicles" element={<ListPage/>}/>
 
 					</Route>
 				</Routes>
