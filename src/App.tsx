@@ -13,13 +13,13 @@ import FeedbackForm from './components/form/feedback_form'
 import ComingSoonPage from './pages/coming_soon'
 import VehiclePage from './pages/vehiclePage'
 import Custom from './pages/сustom'
-
+import './App.css';
 
 function App() {
 
 	return (
-		<LocaleProvider locales={locales} translations={translations}>
-			<BrowserRouter>
+		<LocaleProvider locales={locales} translations={translations} >
+			<BrowserRouter >
 				<Routes>
 					<Route path="/" element={<Layout />}>
 						<Route index element={<Home />} />

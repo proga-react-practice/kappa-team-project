@@ -37,14 +37,13 @@ export default function Layout() {
 
     return (
         <ThemeProvider theme={themes[themeIndex].theme}>
-            <AppBar sx ={{bgcolor: "background.default"}}>
-                <Toolbar sx={{height: 'auto', width: 'auto', margin: 0,   justifyContent: "start", gap: 10,  display:{xs:'none', md:'flex'}}}>
+            <AppBar sx ={{bgcolor: "background.default",} }>
+                <Toolbar sx={{height: 'auto', width: 'auto', margin: 0, overflowY:"auto" , justifyContent: "start", gap: 10,  display:{xs:'none', md:'flex'}}}>
                     <Link to="/"><IconButton sx={{color: 'primary.main'}}><HomeIcon/></IconButton></Link>
                     <Link to="cars"><Button startIcon={<DirectionsCarIcon/>} sx={{color: 'primary.main'}} href="vlad">{t.cars}</Button></Link>
                     <Link to="moto"><Button startIcon={<TwoWheelerIcon/>} sx={{color: 'primary.main'}} href="ira">{t.moto}</Button></Link>
                     <Link to="list"><Button startIcon={<ListIcon/>} sx={{color: 'primary.main'}} href="ira">{t.list}</Button></Link>
                     <Link to="vehicles"><Button startIcon={<ListIcon/>} sx={{color: 'primary.main'}} href="ira">{t.list}</Button></Link>
-
                     <Button sx={{color: 'primary.main', marginLeft: "auto"}} onClick={changeLocale}>{t.lang_name}</Button>
                     <IconButton sx={{color: 'primary.main'}} onClick={changeTheme}>{themes[themeIndex].icon}</IconButton>
                 </Toolbar>

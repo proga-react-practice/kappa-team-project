@@ -43,10 +43,10 @@ export default function MotoProvider({children}: CarsProviderProps) {
         setMotorcycles(newMotorcycles);
       };
 
-      const favoriteMotorcycle = (index: number) => {
-        const newMotorcycles = [...Motorcycles];
-        newMotorcycles[index].favorite = !newMotorcycles[index].favorite;
-        setMotorcycles(newMotorcycles);
+      const favoriteMotorcycle = (i: number) => {
+
+        setMotorcycles(Motorcycles.map((moto, index) => index === i ? {...moto, favorite: !moto.favorite} : moto)
+        );
       }
 
     return (

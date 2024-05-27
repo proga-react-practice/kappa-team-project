@@ -13,10 +13,6 @@ import {
     AccordionSummary,
     AccordionDetails,
     FormControl,
-    InputLabel,
-    Select,
-    MenuItem,
-    TextField,
     RadioGroup,
     FormControlLabel,
     Radio,
@@ -30,6 +26,7 @@ import { useSearchParams } from 'react-router-dom';
 import { MotoContext } from "../components/providers/motoProvider";
 import { CarsContext } from "../components/providers/carsProvider";
 import { LocaleContext } from "../components/providers/localeProvider";
+
 interface VehicleCardProps {
     vehicle: any;
     engineTypes: string[];
@@ -84,9 +81,9 @@ const Content = styled(Box)(({ theme }) => ({
     [theme.breakpoints.down('md')]: {
         width: '100%'
     },
-    overflowY: 'auto',
     maxHeight: 'calc(100vh - 64px)',
 }));
+
 const Custom: React.FC = () => {
     const { cars, toggleFavoriteCar } = useContext(CarsContext) || { cars: [] };
     const { translation } = useContext(LocaleContext);
@@ -123,18 +120,19 @@ const Custom: React.FC = () => {
       .filter(vehicle => 
           (typeFilter ? vehicle.type === typeFilter : true) &&
           (yearFilter ? vehicle.year === parseInt(yearFilter) : true) &&
-          (engineFilter ? vehicle.engine === parseInt(engineFilter) : true)
+          (engineFilter ? vehicle.engine !== undefined && vehicle.engine.toString() === engineFilter : true)
       );
+    console.log(rows)
 
     return (
-        <Box sx={{ minHeight: '100vh', width: '100vw' }}>
+        <Box sx={{ height: '100vh', width: '100vw', overflowY: 'auto', paddingBottom: 2 }}>
             <Box sx={{ paddingTop: 3, paddingLeft: 1 }}>
                 <Typography variant='h4' align='left' sx={{ mt: 2, typography: { xs: 'h4', md: 'h3' } }} color="primary.main">{vehicle_list}</Typography>
                 <Divider sx={{ width: { xs: '0%', md: "100%" } }} />
             </Box>
             <Box sx={{ display: 'flex', flexDirection: { xs: 'column', md: 'row' }, minHeight: '100vh', width: '100vw' }}>
-                <Sidebar>
-                    <Typography variant="h6" color="primary.main">Filters</Typography>
+                <Sidebar >
+                    <Typography variant="h6" color="primary.main" >Filters</Typography>
                     
                     <Accordion defaultExpanded={true}>
                         <AccordionSummary expandIcon={<ExpandMoreIcon />}>
@@ -158,26 +156,6 @@ const Custom: React.FC = () => {
                     
                     <Accordion>
                         <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                            <Typography>Year</Typography>
-                        </AccordionSummary>
-                        <AccordionDetails>
-                            <FormControl fullWidth>
-                                <InputLabel>Year</InputLabel>
-                                <Select
-                                    value={yearFilter}
-                                    onChange={(e) => handleFilterChange("year", e.target.value)}
-                                >
-                                    <MenuItem value="">All</MenuItem>
-                                    {[...new Set(rows.map(vehicle => vehicle.year))].map(year => (
-                                        <MenuItem key={year} value={year}>{year}</MenuItem>
-                                    ))}
-                                </Select>
-                            </FormControl>
-                        </AccordionDetails>
-                    </Accordion>
-                    
-                    <Accordion>
-                        <AccordionSummary expandIcon={<ExpandMoreIcon />}>
                             <Typography>Engine</Typography>
                         </AccordionSummary>
                         <AccordionDetails>
@@ -189,36 +167,18 @@ const Custom: React.FC = () => {
                                     onChange={(e) => handleFilterChange("engine", e.target.value)}
                                 >
                                     <FormControlLabel value="" control={<Radio />} label="All" />
-                                    {engineTypes.map((engine, index) => (
-                                        <FormControlLabel key={index} value={index.toString()} control={<Radio />} label={engine} />
-                                    ))}
+                                    <FormControlLabel value="0" control={<Radio />} label="Petrol" />
+                                    <FormControlLabel value="1" control={<Radio />} label="Diesel" />
+                                    <FormControlLabel value="2" control={<Radio />} label="Electric" />
                                 </RadioGroup>
                             </FormControl>
-                        </AccordionDetails>
-                    </Accordion>
-
-
-                   
-
-                    <Accordion>
-                        <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                            <Typography>Model</Typography>
-                        </AccordionSummary>
-                        <AccordionDetails>
-                            <TextField
-                                label="Search Brand"
-                                variant="outlined"
-                                fullWidth
-                                margin="dense"
-                            />
-                            
                         </AccordionDetails>
                     </Accordion>
                 </Sidebar>
                 <Content>
                     <Grid container spacing={2}>
                         {rows.map((vehicle, index) => (
-                            <Grid item xs={12} sm={6} md={4} lg={3} key={index}>
+                            <Grid item xs={12} sm={6} md={4} lg={3} key={index} sx={{ paddingRight: { xs: 3, md: 0 }, paddingBottom: { xs: 0, md: 0 } }}>
                                 <VehicleCard
                                     vehicle={vehicle}
                                     engineTypes={engineTypes}
