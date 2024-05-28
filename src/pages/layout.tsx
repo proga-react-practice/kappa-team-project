@@ -17,7 +17,7 @@ export default function Layout() {
     const { changeLocale, translation } = useContext(LocaleContext);
     const t = translation.layout;
 
-    const [themeIndex, setThemeIndex] = useState(0);
+    const [themeIndex, setThemeIndex] = useState(localStorage.getItem('theme') ? parseInt(localStorage.getItem('theme') as string) : 0);
 
     const [anchorNav, setAnchorNav] = useState<null | HTMLElement>(null);
 
@@ -31,6 +31,7 @@ export default function Layout() {
 
     function changeTheme() {
         setThemeIndex((themeIndex + 1) % themes.length);
+        localStorage.setItem('theme', (themeIndex + 1) % themes.length + '');
     }
 
     return (

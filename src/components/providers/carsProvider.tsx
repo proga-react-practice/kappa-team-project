@@ -28,7 +28,12 @@ export const CarsContext = createContext<CarsContextProps>(
 )
 
 export default function CarsProvider({children}: CarsProviderProps) {
-    const [cars, setCars] = useState<Car[]>([])
+    const [cars, setCarsState] = useState<Car[]>(localStorage.getItem('cars') ? JSON.parse(localStorage.getItem('cars') as string) : [])
+
+    const setCars = (cars: Car[]) => {
+        setCarsState(cars)
+        localStorage.setItem('cars', JSON.stringify(cars))
+    }
 
     function addCar(car: Car) { // Function to add a car to the list
         setCars([...cars, car])

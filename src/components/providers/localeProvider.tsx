@@ -30,7 +30,7 @@ export const LocaleContext = createContext<LocaleContextProps>({
  })
 
 export default function LocaleProvider({ children, locales, translations }: LocaleProviderProps) {
-    const [localeIndex, setLocaleIndex] = useState(0)
+    const [localeIndex, setLocaleIndex] = useState(localStorage.getItem('locale') ? parseInt(localStorage.getItem('locale') as string) : 0)
     const [locale, setLocale] = useState(locales[localeIndex])
     const [translation, setTranslation] = useState(translations[locale])
 
@@ -45,6 +45,7 @@ export default function LocaleProvider({ children, locales, translations }: Loca
 
     function changeLocale() {
         setLocaleIndex((localeIndex + 1) % locales.length)
+        localStorage.setItem('locale', (localeIndex + 1) % locales.length + '')
     }
 
     return (
