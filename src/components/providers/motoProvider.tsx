@@ -26,7 +26,12 @@ export const MotoContext = createContext<MotoContextProps>(
 )
 
 export default function MotoProvider({children}: CarsProviderProps) {
-    const [Motorcycles, setMotorcycles] = useState<Motorcycle[]>([])
+    const [Motorcycles, setMotorcyclesState] = useState<Motorcycle[]>(localStorage.getItem('Motorcycles') ? JSON.parse(localStorage.getItem('Motorcycles') as string) : [])
+
+    const setMotorcycles = (Motorcycles: Motorcycle[]) => {
+        setMotorcyclesState(Motorcycles)
+        localStorage.setItem('Motorcycles', JSON.stringify(Motorcycles))
+    }
 
     const addMotorcycle = (motorcycle: Motorcycle) => {
         setMotorcycles([...Motorcycles, motorcycle]);
