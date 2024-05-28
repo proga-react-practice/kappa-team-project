@@ -10,7 +10,7 @@ interface MotoContextProps {
     saveChanges: (editedMoto: Motorcycle, editIndex: number) => void
 }
 
-interface CarsProviderProps {
+interface MotosProviderProps {
     children?: React.ReactNode
 }
 
@@ -25,7 +25,7 @@ export const MotoContext = createContext<MotoContextProps>(
     }
 )
 
-export default function MotoProvider({children}: CarsProviderProps) {
+export default function MotoProvider({children}: MotosProviderProps) {
     const [Motorcycles, setMotorcycles] = useState<Motorcycle[]>([])
 
     const addMotorcycle = (motorcycle: Motorcycle) => {
