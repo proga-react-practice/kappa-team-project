@@ -12,7 +12,7 @@ const initialMotorcycleState: Motorcycle = {
   maker: '',
   model: '',
   year: undefined,
-  engine:undefined ,
+  engine: undefined,
   favorite: false,
   image: ''
 };
@@ -22,7 +22,7 @@ interface MotorcycleFormProps {
 }
 
 export default function MotorcycleForm({ addMotorcycle }: MotorcycleFormProps) {
-  const { handleSubmit, register, reset, formState: { errors }, watch, setValue } = useForm<Motorcycle>({ defaultValues: initialMotorcycleState });
+  const { handleSubmit, register, reset, formState: { errors }, watch, setValue, clearErrors } = useForm<Motorcycle>({ defaultValues: initialMotorcycleState });
   const { translation } = useContext(LocaleContext);
   const f = translation.form;
   const m = translation.moto_form;
@@ -39,9 +39,6 @@ export default function MotorcycleForm({ addMotorcycle }: MotorcycleFormProps) {
     reset({});
   };
 
-  useEffect(() => {
-    console.log(watch());
-  }, [watch]);
 
   const uploadImage = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target === null) return;
@@ -60,7 +57,7 @@ export default function MotorcycleForm({ addMotorcycle }: MotorcycleFormProps) {
 
   return (
     <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', bgcolor: 'background.default' }}>
-      <Card sx={{ overflow: "visible", padding: 2 }}>
+      <Card sx={{ overflow: "visible", padding: 1 }}>
         <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: 1, paddingX: 2 }}>
           <form onSubmit={handleSubmit(onSubmit)}>
             <Stack direction="column" spacing={2}>
@@ -91,13 +88,17 @@ export default function MotorcycleForm({ addMotorcycle }: MotorcycleFormProps) {
                     }} />
                 </Button>
               </Box>
-              <FormControl error={!!errors.maker}>
+              <FormControl error={errors.maker !== undefined}>
                 <InputLabel htmlFor="make">{f.maker}</InputLabel>
                 <Select
                   id="make"
                   label={f.maker}
                   {...register('maker', { required: e.maker_error })}
                   value={watch('maker') || ''}
+                  onChange={(e) => {
+                    setValue('maker', e.target.value);
+                    clearErrors('maker');
+                  }}
                 >
                   <MenuItem value="">{f.select_maker}</MenuItem>
                   {motoMakers.map((maker) => (
@@ -133,7 +134,7 @@ export default function MotorcycleForm({ addMotorcycle }: MotorcycleFormProps) {
                     <FormControlLabel
                       key={index}
                       {...register('engine', { required: e.engine_error })}
-                      value={index}
+                      value={engine}
                       control={<Radio />}
                       label={engine}
                     />
