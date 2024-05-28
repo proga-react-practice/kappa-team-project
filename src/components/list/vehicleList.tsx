@@ -1,6 +1,6 @@
 import { useContext } from "react"
-import { CarsContext } from "../components/providers/carsProvider"
-import { MotoContext } from "../components/providers/motoProvider";
+import { CarsContext } from "../providers/carsProvider"
+import { MotoContext } from "../providers/motoProvider";
 import { DataGrid, GridActionsCellItem, GridColDef } from '@mui/x-data-grid';
 import { Box, Typography } from "@mui/material";
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
@@ -8,7 +8,7 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import TwoWheeler from "@mui/icons-material/TwoWheeler";
 import DirectionsCarIcon from '@mui/icons-material/DirectionsCar';
 import LaunchIcon from '@mui/icons-material/Launch';
-import { LocaleContext } from "../components/providers/localeProvider";
+import { LocaleContext } from "../providers/localeProvider";
 import { Link } from "react-router-dom";
 
 export function VehicleList() {
@@ -30,7 +30,7 @@ export function VehicleList() {
                 <GridActionsCellItem
                     icon={<Link to={"/vehicle/"+params.id}><LaunchIcon
                     sx={{color: 'primary.main'}}/></Link>}
-                    label='favorite'
+                    label='open'
                     onClick={() => console.log(params.row)}
                 />,
             ]

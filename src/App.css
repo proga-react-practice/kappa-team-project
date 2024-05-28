@@ -1,5 +1,5 @@
 #root {
-  margin: 0;
+  margin: 20;
   padding: 0;
   overflow-x: clip;
 }
@@ -7,4 +7,5 @@
 body{
   margin: 0;
   padding: 0;
+
 }

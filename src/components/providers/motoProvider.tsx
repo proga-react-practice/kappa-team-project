@@ -3,8 +3,8 @@ import { Motorcycle } from '../../lib/types'
 
 interface MotoContextProps {
     Motorcycles: Motorcycle[],
-    setMotorcycles: (cars: Motorcycle[]) => void,
-    addMotorcycle: (cars: Motorcycle) => void,
+    setMotorcycles: (motos: Motorcycle[]) => void,
+    addMotorcycle: (motos: Motorcycle) => void,
     deleteMotorcycle: (index: number) => void,
     favoriteMotorcycle: (index: number) => void,
     saveChanges: (editedMoto: Motorcycle, editIndex: number) => void
@@ -43,10 +43,10 @@ export default function MotoProvider({children}: CarsProviderProps) {
         setMotorcycles(newMotorcycles);
       };
 
-      const favoriteMotorcycle = (index: number) => {
-        const newMotorcycles = [...Motorcycles];
-        newMotorcycles[index].favorite = !newMotorcycles[index].favorite;
-        setMotorcycles(newMotorcycles);
+      const favoriteMotorcycle = (i: number) => {
+
+        setMotorcycles(Motorcycles.map((moto, index) => index === i ? {...moto, favorite: !moto.favorite} : moto)
+        );
       }
 
     return (

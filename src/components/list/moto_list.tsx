@@ -2,7 +2,7 @@ import React, { useState, useContext } from 'react';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Collapse from '@mui/material/Collapse';
-import { Typography, Box, IconButton } from '@mui/material';
+import { Typography, Box, IconButton, Stack } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
@@ -21,6 +21,8 @@ export default function MotorcycleList() {
   const { Motorcycles, setMotorcycles, deleteMotorcycle, saveChanges, favoriteMotorcycle } = useContext(MotoContext);
   const { translation } = useContext(LocaleContext)
   const f = translation.form
+
+  const engineTypes = [f.petrol,f.diesel,f.electric]
 
   const dragItem = React.useRef<number | null>(null);
   const dragOverItem = React.useRef<number | null>(null);
@@ -44,7 +46,7 @@ export default function MotorcycleList() {
       sx={{
         overflowY: 'auto',
         overflowX: 'hidden',
-        maxHeight: { xs: 200, md: 400 },
+        maxHeight: { xs: 300, md: 500 },
         scrollbarColor: (theme) => `${theme.palette.primary.main} ${theme.palette.background.default}`,
       }}
     >
@@ -58,7 +60,7 @@ export default function MotorcycleList() {
             onDragEnter={() => (dragOverItem.current = index)}
             onDragEnd={handleSort}
             onDragOver={(e) => e.preventDefault()}
-            sx={{ marginBottom: 1, width: 250 }}
+            sx={{ marginBottom: 1, width: 280 }}
           >
             <CardContent>
               <Box display="flex" justifyContent="space-between" alignItems="center">
@@ -74,7 +76,16 @@ export default function MotorcycleList() {
                     {motorcycle.favorite ? <FavoriteIcon/> : <FavoriteBorderIcon/>}
                   </IconButton>
                 </Box>
+
+
               </Box>
+              <Stack direction={"row"}>
+               {motorcycle.image && 
+                  <Box component="img" src={motorcycle.image} alt={motorcycle.model} sx={{ paddingRight: 1, height: "100%", width: "50%", objectFit: "contain" }} />}
+
+
+                <Box  >
+                
               <Typography variant="body1" sx={{ textAlign: 'left' }}>
                 <strong>{f.maker}:</strong> {motorcycle.maker}
               </Typography>
@@ -85,8 +96,8 @@ export default function MotorcycleList() {
                 <strong>{f.year}:</strong> {motorcycle.year}
               </Typography>
               <Typography variant="body1" sx={{ textAlign: 'left' }}>
-              <strong>{f.engine}:</strong> {motorcycle.engine}
-              </Typography>
+              <strong>{f.engine}:</strong> {motorcycle.engine && engineTypes[motorcycle.engine]}
+              </Typography></Box></Stack>
             </CardContent>
           </Card>
         </Collapse>
