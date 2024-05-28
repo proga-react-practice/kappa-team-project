@@ -139,6 +139,15 @@ const CustomList: React.FC = () => {
         setSearchParams(searchParams);
     };
 
+    
+    const commonToggleFavorite = (id: number, type: string) => {
+        if (type === "Car") {
+            toggleFavoriteCar(id);
+        } else if (type === "Motorcycle") {
+            favoriteMotorcycle(id);
+        }
+    };
+
     useEffect(() => {
         setTypeFilter(searchParams.get("type") || "");
         setYearFromFilter(searchParams.get("yearFrom") || "");
@@ -163,13 +172,11 @@ const CustomList: React.FC = () => {
 
     const indexOfLastVehicle = currentPage * vehiclesPerPage;
     const indexOfFirstVehicle = indexOfLastVehicle - vehiclesPerPage;
-    const currentVehicles = rows.slice(indexOfFirstVehicle, indexOfLastVehicle);
     const totalPages = Math.ceil(rows.length / vehiclesPerPage);
-
+    
     const handlePageChange = (_event: React.ChangeEvent<unknown>, value: number) => {
         setCurrentPage(value);
     };
-
     return (
         <>
             <Box sx={{ paddingTop: 3, paddingLeft: 1, paddingRight: 1 }}>
@@ -295,12 +302,12 @@ const CustomList: React.FC = () => {
                 </Sidebar>
                 <Content>
                     <Grid container spacing={2}>
-                        {currentVehicles.map((vehicle, i) =>
+                        {rows.slice(indexOfFirstVehicle, indexOfLastVehicle).map((vehicle, i) =>
                             <Grid item xs={12} sm={6} md={4} key={i}>
                                 <VehicleCard
                                     vehicle={vehicle}
                                     engineTypes={engineTypes}
-                                    toggleFavorite={vehicle.type === "Car" ? toggleFavoriteCar : favoriteMotorcycle}
+                                    toggleFavorite={(id) => commonToggleFavorite(id, vehicle.type)}
                                 />
                             </Grid>
                         )}

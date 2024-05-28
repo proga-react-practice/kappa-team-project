@@ -127,21 +127,16 @@ export default function MotorcycleForm({ addMotorcycle }: MotorcycleFormProps) {
                 helperText={errors.year?.message?.toString()}
               />
 
-              <FormControl required component="fieldset" error={errors.engine !== undefined}>
-                <FormLabel component="legend">{f.engine_text}</FormLabel>
-                <RadioGroup row value={watch('engine') || ''} aria-label="engine">
-                  {engineTypes.map((engine, index) => (
-                    <FormControlLabel
-                      key={index}
-                      {...register('engine', { required: e.engine_error })}
-                      value={engine}
-                      control={<Radio />}
-                      label={engine}
-                    />
-                  ))}
+              <FormControl error={errors.engine !== undefined} component="fieldset">
+                <FormLabel component="legend">{f.engine_text + "*"}</FormLabel>
+                <RadioGroup 
+                    row
+                    value={watch('engine') || ''}
+                    aria-label="engine">
+                    {engineTypes.map((engine, index) => (<FormControlLabel value={index} {...register('engine', {required: e.engine_error})} control={<Radio />} label={engine} />))}
                 </RadioGroup>
                 <FormHelperText>{errors.engine?.message?.toString()}</FormHelperText>
-              </FormControl>
+            </FormControl>
 
               <Stack direction="row" spacing={1} sx={{ display: 'flex', justifyContent: 'center' }}>
                 <Button variant="contained" type="submit" color='primary'>
