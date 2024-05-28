@@ -31,7 +31,17 @@ export const translations : Translations = {
             editmoto: "Edit Motorcycle",
             type: "Type",
             favorite: "Favorite",
-            vehicle_list: "Vehicle List"
+            vehicle_list: "Vehicle List",
+            upload_image: "Upload Image",
+            open: "Open",
+            filters: "Filters",
+            all: "All",
+            car: "Car",
+            motorcycle: "Motorcycle",
+            from: "From",
+            to: "To",
+            manufacturer: "Manufacturer",
+            search: "Search",
         },
         error: {
             maker_error: "Maker is required",
@@ -57,7 +67,8 @@ export const translations : Translations = {
         },
         page_not_found: {
             title: "404 Page not found",
-            message: "Sorry, the page you are looking for could not be found or has been removed."
+            message: "Sorry, the page you are looking for could not be found or has been removed.",
+            btn_return : "Return To Home",
         },
         page_home: {
             title: "Your own collection",
@@ -79,7 +90,25 @@ export const translations : Translations = {
             ourTeam: "Our Team",
             contact: "Contact",
             feedback: "Feedback"
-        }
+        },
+
+        feedback:{
+            name: "Your name",
+            email: "Your email",
+            feedback_text : "Feedback or Suggestions",
+            feedback_placeholder:"Enter your feedback or suggestions",
+            submit:"Submit",
+            error_name:"Please enter your name",
+            error_email:"Please enter your email",
+            error_feedback:"Please enter your feedback or suggestions",
+            name_placeholder : "Enter your name",
+            email_placeholder: "Enter your email",
+
+        },
+        comingSoon: {
+            title: "Coming Soon",
+            description: "Our website is under construction. We'll be here soon with our new awesome site, subscribe to be notified.",
+        },
 
     },
     uk_UA: {
@@ -110,7 +139,17 @@ export const translations : Translations = {
             editmoto: "Редагувати мотоцикл",
             type: "Тип",
             favorite: "Улюблене",
-            vehicle_list: "Список транспортних засобів"
+            vehicle_list: "Список транспортних засобів",
+            upload_image: "Завантажити зображення",
+            open: "Відкрити",
+            filters: "Фільтри",
+            all: "Всі",
+            car: "Автомобіль",
+            motorcycle: "Мотоцикл",
+            from: "Від",
+            to: "До",
+            manufacturer: "Виробник",
+            search: "Пошук",
         },
         error: {
             maker_error: "Виробник є обов'язковим",
@@ -136,7 +175,9 @@ export const translations : Translations = {
         },
         page_not_found: {
             title: "404 Сторінка не знайдена",
-            message: "Вибачте, сторінку, яку ви шукаєте, не знайдено або її було видалено."
+            message: "Вибачте, сторінку, яку ви шукаєте, не знайдено або її було видалено.",
+            btn_return : "Повернутися додому",
+
         },
         page_home: {
             title: "Ваша власна колекція",
@@ -158,7 +199,25 @@ export const translations : Translations = {
             ourTeam: "Наша команда",
             contact: "Контакти",
             feedback: "Зворотній зв'язок"
-        }
+        },
+        feedback: {
+            name: "Ваше ім'я",
+            email: "Ваша електронна пошта",
+            feedback_text: "Відгуки або Пропозиції",
+            submit: "Надіслати",
+            error_name: "Будь ласка, введіть своє ім'я",
+            error_email: "Будь ласка, введіть свою електронну пошту",
+            error_feedback: "Будь ласка, введіть ваші відгуки або пропозиції",
+            feedback_placeholder: "Введіть ваші відгуки або пропозиції",
+            name_placeholder : "Введіть своє ім'я",
+            email_placeholder: "Введіть свою електронну пошту"
+
+        },
+        comingSoon: {
+            title: "Скоро відкриття",
+            description: "Наш сайт в процесі розробки. Ми скоро будемо тут з новим чудовим сайтом, підпишіться, щоб бути сповіщеними.",
+        },
+
 
     },
 };

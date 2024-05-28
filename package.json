@@ -14,7 +14,7 @@
     "@emotion/styled": "^11.11.5",
     "@mui/icons-material": "^5.15.15",
     "@mui/lab": "^5.0.0-alpha.170",
-    "@mui/material": "^5.15.17",
+    "@mui/material": "^5.15.18",
     "@mui/styled-engine-sc": "^6.0.0-alpha.18",
     "@mui/x-data-grid": "^7.5.0",
     "@mui/x-tree-view": "^7.3.1",
@@ -24,7 +24,7 @@
     "react-dnd": "^16.0.1",
     "react-dnd-html5-backend": "^16.0.1",
     "react-dom": "^18.2.0",
-    "react-hook-form": "^7.51.4",
+    "react-hook-form": "^7.51.5",
     "react-router-dom": "^6.23.0",
     "styled-components": "^6.1.10"
   },

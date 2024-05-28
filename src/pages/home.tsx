@@ -17,19 +17,14 @@ export default function Home() {
         navigate('/moto');
     };
     return (
-        <Box sx={{
-            bgcolor: "background.default",
-            height: "100vh",
-            overflowY: 'auto',
-            color: "text.secondary",
-        }}>
+        <>
             <Stack direction={{ xs: 'column', md: 'row' }} spacing={3} sx={{ my: 3, padding: 3 }}>
                 <Box sx={{ flex: 1 }}>
                     <Typography
                         variant="h3"
                         component="h1"
                         sx={{
-                            color: 'neutral.veryDarkViolet',
+                            color: 'text.primary',
                             mb: 1.5,
                             letterSpacing: -1,
                             lineHeight: 1,
@@ -43,7 +38,7 @@ export default function Home() {
                         variant="body2"
                         component="p"
                         sx={{
-                            color: 'neutral.grayishViolet',
+                            color: 'text.secondary',
                             lineHeight: 1.73,
                             fontSize: '0.92rem',
                         }}
@@ -93,6 +88,6 @@ export default function Home() {
           </Box>
             </Stack>
             <Footer />
-        </Box>
+        </>
     );
 }

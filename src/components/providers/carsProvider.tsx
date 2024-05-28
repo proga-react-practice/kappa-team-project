@@ -1,6 +1,5 @@
-import { createContext } from 'react'
+import { createContext, useState } from 'react'
 import { Car } from '../../lib/types'
-import VCV from '../../lib/vcv'
 
 interface CarsContextProps {
     cars: Car[],
@@ -9,10 +8,7 @@ interface CarsContextProps {
     deleteCar: (index: number) => void,
     editCar: (index: number | null, car: Car) => void,
     moveCar: (from: number, to: number) => void,
-    revertTo: (index: number) => void,
     toggleFavoriteCar: (index: number) => void,
-    history: Car[][],
-    commitIndex: number
 }
 
 interface CarsProviderProps {
@@ -27,19 +23,12 @@ export const CarsContext = createContext<CarsContextProps>(
         deleteCar: () => {},
         editCar: () => {},
         moveCar: () => {},
-        revertTo: () => {},
         toggleFavoriteCar: () => {},
-        history: [],
-        commitIndex: 0
     }
 )
 
 export default function CarsProvider({children}: CarsProviderProps) {
-    const { state : cars, 
-		setValue : setCars, 
-		revertTo : revertTo, 
-		history : history,
-		index: commitIndex } = VCV<Car[]>([])
+    const [cars, setCars] = useState<Car[]>([])
 
     function addCar(car: Car) { // Function to add a car to the list
         setCars([...cars, car])
@@ -65,7 +54,7 @@ export default function CarsProvider({children}: CarsProviderProps) {
     }
 
     return (
-        <CarsContext.Provider value={{cars, setCars, revertTo, history, commitIndex, addCar, deleteCar, editCar, moveCar, toggleFavoriteCar}}>
+        <CarsContext.Provider value={{cars, setCars, addCar, deleteCar, editCar, moveCar, toggleFavoriteCar}}>
             {children}
         </CarsContext.Provider>
     )
