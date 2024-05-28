@@ -144,7 +144,7 @@ const CustomList: React.FC = () => {
         if (type === "Car") {
             toggleFavoriteCar(id);
         } else if (type === "Motorcycle") {
-            favoriteMotorcycle(id);
+            favoriteMotorcycle(id - cars.length);
         }
     };
 
