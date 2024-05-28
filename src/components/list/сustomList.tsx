@@ -279,28 +279,21 @@ const CustomList: React.FC = () => {
                         </AccordionDetails>
                     </Accordion>
 
-                    <Accordion>
-                        <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                            <Typography>{form.search}</Typography>
-                        </AccordionSummary>
-                        <AccordionDetails>
-                            <TextField
-                                label={form.search}
-                                value={searchQuery}
-                                onChange={(e) => setSearchQuery(e.target.value)}
-                                fullWidth
-                                InputProps={{
-                                    startAdornment: (
-                                        <InputAdornment position="start">
-                                            <SearchIcon />
-                                        </InputAdornment>
-                                    ),
-                                }}
-                            />
-                        </AccordionDetails>
-                    </Accordion>
                 </Sidebar>
                 <Content>
+                        <TextField
+                            label={form.search}
+                            value={searchQuery}
+                            onChange={(e) => setSearchQuery(e.target.value)}
+                            fullWidth
+                            InputProps={{
+                                startAdornment: (
+                                    <InputAdornment position="start">
+                                        <SearchIcon />
+                                    </InputAdornment>
+                                ),
+                            }}
+                        />
                     <Grid container spacing={2}>
                         {rows.slice(indexOfFirstVehicle, indexOfLastVehicle).map((vehicle, i) =>
                             <Grid item xs={12} sm={6} md={4} key={i}>
