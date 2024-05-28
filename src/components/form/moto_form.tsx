@@ -9,10 +9,10 @@ import { LocaleContext } from '../providers/localeProvider';
 import UploadIcon from '@mui/icons-material/Upload';
 
 const initialMotorcycleState: Motorcycle = {
-  maker: 'Yamaha',
-  model: 'SDFG',
-  year: 1999,
-  engine: 1,
+  maker: '',
+  model: '',
+  year: undefined,
+  engine:undefined ,
   favorite: false,
   image: ''
 };
