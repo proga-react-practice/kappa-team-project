@@ -104,7 +104,11 @@ export const translations : Translations = {
             name_placeholder : "Enter your name",
             email_placeholder: "Enter your email",
 
-        }
+        },
+        comingSoon: {
+            title: "Coming Soon",
+            description: "Our website is under construction. We'll be here soon with our new awesome site, subscribe to be notified.",
+        },
 
     },
     uk_UA: {
@@ -208,7 +212,11 @@ export const translations : Translations = {
             name_placeholder : "Введіть своє ім'я",
             email_placeholder: "Введіть свою електронну пошту"
 
-        }
+        },
+        comingSoon: {
+            title: "Скоро відкриття",
+            description: "Наш сайт в процесі розробки. Ми скоро будемо тут з новим чудовим сайтом, підпишіться, щоб бути сповіщеними.",
+        },
 
 
     },
