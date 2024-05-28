@@ -293,6 +293,7 @@ const CustomList: React.FC = () => {
                                     </InputAdornment>
                                 ),
                             }}
+                            sx={{marginBottom:2}}
                         />
                     <Grid container spacing={2}>
                         {rows.slice(indexOfFirstVehicle, indexOfLastVehicle).map((vehicle, i) =>
