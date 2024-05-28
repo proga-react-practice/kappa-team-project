@@ -10,7 +10,7 @@ interface MotoContextProps {
     saveChanges: (editedMoto: Motorcycle, editIndex: number) => void
 }
 
-interface CarsProviderProps {
+interface MotosProviderProps {
     children?: React.ReactNode
 }
 

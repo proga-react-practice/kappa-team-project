@@ -22,6 +22,7 @@ import { Motorcycle } from '../../lib/types';
 import {  motoMakers } from '../../lib/constants';
 import { useForm } from 'react-hook-form';
 import { LocaleContext } from '../providers/localeProvider';
+import UploadIcon from '@mui/icons-material/Upload';
 
 interface MotoEditDialogProps {
   open: boolean;
@@ -47,13 +48,51 @@ const MotoEditDialog: React.FC<MotoEditDialogProps> = ({ open, handleClose, moto
       saveChanges(data); 
       handleClose();
   };
+  const uploadImage = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target === null) return
+    if (e.target.files === null) return
+    const img = e.target.files[0]
+    const reader = new FileReader()
+    reader.onload = (e) => {
+        setValue('image', e.target?.result as string)
+    }
+    reader.readAsDataURL(img)
+}
+
+  useEffect(() => {
+      register('image')
+  }, [register])
   return (
     <Dialog open={open} onClose={handleClose} >
       <DialogTitle>{f.editmoto}</DialogTitle>
       <DialogContent>
         <Container component="form" onSubmit={handleSubmit(handleSaveEdit)} id="moto-edit">
-          <Stack direction="column" spacing={2} padding={2}>
-            <FormControl sx={{ width: 300 }}>
+          <Stack direction="column" spacing={2} padding={1}>
+          <Button
+                  component="label"
+                  role={undefined}
+                  variant="contained"
+                  tabIndex={-1}
+                  startIcon={<UploadIcon />}
+                >
+                  {f.upload_image}
+                  <input
+                    type="file"
+                    accept='image/*'
+                    onChange={uploadImage}
+                    style={{
+                      clip: 'rect(0 0 0 0)',
+                      clipPath: 'inset(50%)',
+                      height: 1,
+                      overflow: 'hidden',
+                      position: 'absolute',
+                      bottom: 0,
+                      left: 0,
+                      whiteSpace: 'nowrap',
+                      width: 1,
+                    }} />
+                </Button>
+            <FormControl sx={{ width: "auto" }}>
               <InputLabel color="secondary">{f.maker}</InputLabel>
               <Select
                 defaultValue={""}
