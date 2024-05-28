@@ -33,7 +33,15 @@ export const translations : Translations = {
             favorite: "Favorite",
             vehicle_list: "Vehicle List",
             upload_image: "Upload Image",
-            open: "Open"
+            open: "Open",
+            filters: "Filters",
+            all: "All",
+            car: "Car",
+            motorcycle: "Motorcycle",
+            from: "From",
+            to: "To",
+            manufacturer: "Manufacturer",
+            search: "Search",
         },
         error: {
             maker_error: "Maker is required",
@@ -129,7 +137,15 @@ export const translations : Translations = {
             favorite: "Улюблене",
             vehicle_list: "Список транспортних засобів",
             upload_image: "Завантажити зображення",
-            open: "Відкрити"
+            open: "Відкрити",
+            filters: "Фільтри",
+            all: "Всі",
+            car: "Автомобіль",
+            motorcycle: "Мотоцикл",
+            from: "Від",
+            to: "До",
+            manufacturer: "Виробник",
+            search: "Пошук",
         },
         error: {
             maker_error: "Виробник є обов'язковим",
